@@ -41,6 +41,7 @@
                     position: relative;
                     width: 100%;
                     margin-bottom: 15px;
+                    cursor: pointer;
                     input {
                         cursor: pointer;
                         margin-bottom: 0;
@@ -69,7 +70,8 @@
                             border-color: $color-primary;
                         }
                         &::before {
-                            transform: scale(0, 1);
+                            background-color: $color-accent;
+                            
                         }
                     }
 
