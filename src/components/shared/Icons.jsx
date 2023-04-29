@@ -6,7 +6,7 @@ function Icons({icon, link}) {
 
     if (icon === 'user') {
         return link ? (
-            <Link className="icon--link icon--login" to="/login">
+            <Link className="icon--link icon--login" to={link}>
                 <FaRegUser />
             </Link>
         ) : (

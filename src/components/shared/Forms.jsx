@@ -18,7 +18,7 @@ function Forms({mode}) {
                 </form>
                 <div className="signup-link">
                     <span>Hesabınız mı yok?&nbsp;</span>
-                    <Link to='/signup' className="create-account-link">
+                    <Link to='/pages/signup' className="create-account-link">
                         Hemen hesap oluşturun
                     </Link>
                 </div>
@@ -44,7 +44,7 @@ function Forms({mode}) {
                 </form>
                 <div className="signup-link">
                     <span>Hesabınız var mı?&nbsp;</span>
-                    <Link to='/login' className="create-account-link">
+                    <Link to='/pages/login' className="create-account-link">
                         Hemen hesapınıza giriş yapın
                     </Link>
                 </div>

@@ -14,16 +14,16 @@ function FullMenu({mode}) {
                         <Link className="menu-item-link" to="/">Anasayfa</Link>                            
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/about">Hakkımızda</Link>
+                        <Link className="menu-item-link" to="/pages/about">Hakkımızda</Link>
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/contact">İletişim</Link>
+                        <Link className="menu-item-link" to="/pages/contact">İletişim</Link>
                     </li>
                 </ul>
             </div>
             <div className="ko-header-secondary-area large-3">
                 <div className="ko-icon-holder">
-                    <Icons icon="user" link="/login" />
+                    <Icons icon="user" link="/pages/login" />
                 </div>
             </div>
         </>
@@ -35,16 +35,16 @@ function FullMenu({mode}) {
                         <Link className="menu-item-link" to="/">Anasayfa</Link>                            
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/about">Hakkımızda</Link>
+                        <Link className="menu-item-link" to="/pages/about">Hakkımızda</Link>
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/contact">İletişim</Link>
+                        <Link className="menu-item-link" to="/pages/contact">İletişim</Link>
                     </li>
                 </ul>
                 <div className="mobile-icon-wrapper">
                     <div className="ko-icon-holder">
                         <span>Log in</span>
-                        <Icons icon="user" link="/login" />
+                        <Icons icon="user" link="/pages/login" />
                     </div>
                 </div>
                 
