@@ -11,13 +11,13 @@ function FullMenu({mode}) {
             <div className={"ko-full-menu--" + mode + " ko-full-menu" + " columns small-9 large-6"}>
                 <ul className="full-menu-list">
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/">Anasayfa</Link>                            
+                        <Link className="menu-item-link" to="/">Home</Link>                            
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/about">Hakkımızda</Link>
+                        <Link className="menu-item-link" to="/pages/about">About Us</Link>
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/contact">İletişim</Link>
+                        <Link className="menu-item-link" to="/pages/contact">Contact</Link>
                     </li>
                 </ul>
             </div>
@@ -32,13 +32,13 @@ function FullMenu({mode}) {
             <div className={"ko-full-menu--" + mode + " ko-full-menu"}>
                 <ul className="full-menu-list">
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/">Anasayfa</Link>                            
+                        <Link className="menu-item-link" to="/">Home</Link>                            
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/about">Hakkımızda</Link>
+                        <Link className="menu-item-link" to="/pages/about">About Us</Link>
                     </li>
                     <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/contact">İletişim</Link>
+                        <Link className="menu-item-link" to="/pages/contact">Contact</Link>
                     </li>
                 </ul>
                 <div className="mobile-icon-wrapper">
