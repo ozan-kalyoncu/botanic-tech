@@ -26,3 +26,46 @@
     display: flex;
     align-items: center;
 }
+
+.icon--inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  cursor: pointer;
+  margin-bottom: 0;
+  display: block;
+  background: none;
+  color: $color-accent;
+  border: 1px solid $color-secondary;
+  position: relative;
+  padding: 16px 24px;
+  border-radius: 3px;
+  &:hover {
+    color: $color-primary;
+    border-color: $color-primary;
+    &::before {
+        background-color: $color-accent;
+        
+    }
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: $color-secondary;
+    transform: scale(1, 1);
+    transform-origin: center;
+    transition: all $delay;
+    z-index: -1;
+  }
+
+}
+
