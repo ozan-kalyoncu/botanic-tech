@@ -5,6 +5,7 @@ import Contact from './pages/Contact';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Payment from './pages/Payment';
+import SubscriptionPlans from './pages/Subscriptions';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -24,6 +25,7 @@ function App() {
             <Route path='/pages/login' element={<LogIn />}></Route>
             <Route path='/pages/signup' element={<SignUp />}></Route>
             <Route path='/payment' element={<Payment />}></Route>
+            <Route path='/subscriptions' element={<SubscriptionPlans />}></Route>
           </Routes>
         </main>
 

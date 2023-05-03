@@ -5,8 +5,6 @@ import { useState, useEffect } from 'react';
 
 function SignUp(params) {
 
-    
-
     const setEventListeners = () => { 
 
         let inputs = document.querySelectorAll('.sign-up.login-container input:not(input[name="submit"])');
@@ -24,7 +22,7 @@ function SignUp(params) {
         });
     }
 
-    const getData = (e) => {
+    const userRegister = (e) => {
         e.preventDefault();
         let inputs = document.querySelectorAll('.sign-up.login-container input:not(input[name="submit"])');
 
@@ -58,7 +56,7 @@ function SignUp(params) {
     })
 
     return (
-        <Forms mode="signup" getData={getData} />
+        <Forms mode="signup" userRegister={userRegister} />
     )
 }
 

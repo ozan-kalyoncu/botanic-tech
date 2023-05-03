@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from "react";
 
-function Forms({mode, getData}) {
+function Forms({mode, userRegister, userLogin}) {
 
     const signupBlock = (mode) => {
         if (mode === 'signup') {
@@ -43,12 +43,11 @@ function Forms({mode, getData}) {
                         <input type="text" name="email" id="email-input" placeholder="Email Address" />
                         <input type="password" name="password" id="password-input" placeholder="Password" />
                         <div className='submit-button'>
-                            <input onClick={getData ? getData : null} type='submit' name='submit' value="Log in" />
+                            <input onClick={userLogin ? userLogin : null} type='submit' name='submit' value="Log in" />
                         </div>
                     </div>
                     {signupBlock('signup')}
                 </form>
-                
             </div>
         </div>
     ) : (
@@ -65,12 +64,11 @@ function Forms({mode, getData}) {
                         <input type="text" name="email" id="email-input" placeholder="Email Address" />
                         <input type="password" name="password" id="password-input" placeholder="Password" />
                         <div className='submit-button'>
-                            <input onClick={getData} type='submit' name='submit' value="Register" />
+                            <input onClick={userRegister ? userRegister : null} type='submit' name='submit' value="Register" />
                         </div>
                     </div>
                     {signupBlock('login')}
                 </form>
-                
             </div>
         </div>
     );

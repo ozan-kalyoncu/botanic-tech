@@ -5,3 +5,6 @@ node_modules
 
 #Package Json
 package.json
+
+#Sass
+src/assets/sass

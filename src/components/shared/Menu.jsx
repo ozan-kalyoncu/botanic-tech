@@ -8,7 +8,7 @@ function FullMenu({mode}) {
 
     return mode === 'desktop' ? (
         <>
-            <div className={"ko-full-menu--" + mode + " ko-full-menu" + " columns small-9 large-6"}>
+            <div className={"ko-full-menu--" + mode + " ko-full-menu" + " columns small-9 large-7"}>
                 <ul className="full-menu-list">
                     <li className="menu-item">
                         <Link className="menu-item-link" to="/">Home</Link>                            
@@ -19,9 +19,12 @@ function FullMenu({mode}) {
                     <li className="menu-item">
                         <Link className="menu-item-link" to="/pages/contact">Contact</Link>
                     </li>
+                    <li className="menu-item">
+                        <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
+                    </li>
                 </ul>
             </div>
-            <div className="ko-header-secondary-area large-3">
+            <div className="ko-header-secondary-area large-2">
                 <div className="ko-icon-holder">
                     <Icons icon="user" link="/pages/login" />
                 </div>
@@ -39,6 +42,9 @@ function FullMenu({mode}) {
                     </li>
                     <li className="menu-item">
                         <Link className="menu-item-link" to="/pages/contact">Contact</Link>
+                    </li>
+                    <li className="menu-item">
+                        <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
                     </li>
                 </ul>
                 <div className="mobile-icon-wrapper">

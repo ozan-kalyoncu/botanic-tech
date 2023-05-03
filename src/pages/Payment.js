@@ -16,25 +16,58 @@ function Payment(params) {
         'year': currentDate.getFullYear(),
         'month': currentDate.getMonth()
     });
+
+    const closeSideBarPayments = () => {
+        document.querySelector(".payment-sidebar-container").classList.remove("active");
+        document.querySelector('.click-capture').classList.remove('click-capture-event');
+    }
     
     const createExpireYears = () => {
         
+        let expireYearGap = 10;
 
-        let expireYearGap = 20;
+        let expireYear = penaltyDate.year + expireYearGap;
 
         let years = [];
 
-        for (let i = 0; i <= 10; i++) {
-            years.push(penaltyDate.year + i)
+        for (let i = penaltyDate.year; i <= expireYear; i++) {
+            years.push(i)
         }
 
         return years;
     }
 
+    const userPay = async () => {
+
+        var headers = new Headers();
+    
+        headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
+
+        let body = JSON.stringify({
+            "cardNumber": "",
+            "cardExpireDate": "",
+            "cardccv2": "",
+            "subscriptionPlanId": ""
+        })
+
+
+        body = JSON.stringify(body);
+
+        var requestOptions = {
+            method: 'POST',
+            headers: headers,
+            body: body,
+            redirect: 'follow'
+        };
+
+        let response = await fetch("https://mis-botanic.herokuapp.com/api/subscription/pay");
+        let data = response.json()
+    }
+
 
     return (
-        <div className="payment-page-container row">
-            <div className="payments-container--info columns small-7">
+        <div className="payment-sidebar-container">
+            <div className="payments-sidebar--info">
                 <div className="payment-site--title">
                     <h2>Botanic Tech</h2>
                 </div>
@@ -78,7 +111,7 @@ function Payment(params) {
                                                 <p className='form-title'>Expire Date:</p>
                                             </div>
                                             <div className='form--select'>
-                                                <select name='expireMM' id='expireMM'>
+                                                <select name='cardExpireDate' id='expireMM'>
                                                     <option value=''>Month</option>
                                                     {months.map((m, i) => {
                                                         return (
@@ -86,7 +119,7 @@ function Payment(params) {
                                                         );  
                                                     })}
                                                 </select> 
-                                                <select name='expireYY' id='expireYY'>
+                                                <select name='cardExpireDate' id='expireYY'>
                                                     <option value=''>Year</option>
                                                     {createExpireYears().map((year, i) => {
                                                         return (
@@ -101,7 +134,7 @@ function Payment(params) {
                                             <div className="title-holder">
                                                 <p className='form-title'>CVC:</p>
                                             </div>
-                                            <input class="cc-cvc" maxlength="3" name="credit-cvc" pattern="\d*" placeholder="CVC" type="tel" />
+                                            <input class="cc-cvc" maxlength="3" name="cardccv2" pattern="\d*" placeholder="CVC" type="tel" />
                                         </div>
 
                                     </div>
@@ -109,11 +142,11 @@ function Payment(params) {
                             </div>
                         </div>
                         <div className="payment-body--buttons">
-                            <button type="button" name="return-to-cart" className="return-to-cart">
+                            <button onClick={() => closeSideBarPayments()} type="button" name="return-to-cart" className="return-to-cart">
                                 {<Icons icon="chevronleft" link="" />}
-                                <Link to='/'>Return to cart</Link>
+                                <p>Return to subscriptions</p>
                             </button>
-                            <button type="button" name="pay" className="button">Pay Now</button>
+                            <button onClick={() => userPay()} type="button" name="pay" className="button">Pay Now</button>
                         </div>
                     </div>             
                 </div>
