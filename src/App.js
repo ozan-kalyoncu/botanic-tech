@@ -39,10 +39,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setUser({token: getItem("token")});
+    setUser({token: getItem("token"), firstName: getItem("firstName"), lastName: getItem("lastName"), userType: getItem("userType")});
   }, [isUser])
 
   return (
+    <BotanicProvider user={user}>
     <Router>
         <div className="App">
           <Header  userCheck={isUser} />
@@ -62,6 +63,7 @@ function App() {
           <Footer />
         </div>
       </Router>
+      </BotanicProvider>
   );
 }
 

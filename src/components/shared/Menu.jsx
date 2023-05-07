@@ -2,24 +2,19 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Icons from '../shared/Icons';
-
+import { useContext } from "react";
+import BotanicContext from "../../context/BotanicContext";
 function FullMenu({mode, userCheck}) {
 
-    const onlineUser = () => {
-        return (
-            <div>
-                {userCheck}
-            </div>
-        )
-    }
+    const { user } = useContext(BotanicContext);
 
     const profileForm = () => {
         if (userCheck) {
             return (
                 <div className="user-button">
                     <div className="user-info">
-                        <span>Furkan</span>
-                        <span>{" Bozkurt"}</span>
+                        <span>{ user.firstName }</span>
+                        <span>{ " " + user.lastName }</span>
                     </div>
                     <div className="ko-icon-holder">
                         <Icons icon="user" />
