@@ -1,7 +1,6 @@
 import React from "react";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaAngleDown } from "react-icons/fa";
 import {Link} from "react-router-dom";
-
 import { FiChevronLeft } from "react-icons/fi";
 
 function Icons({icon, link}) {
@@ -22,7 +21,13 @@ function Icons({icon, link}) {
                 <FiChevronLeft />
             </div>
         )
-    } else return;
+    } else if ( icon === 'angledown' ) {
+        return (
+            <div>
+                <FaAngleDown />
+            </div>
+        )
+    };
     
 }
 

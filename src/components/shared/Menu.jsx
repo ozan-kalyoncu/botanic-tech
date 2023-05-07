@@ -3,8 +3,36 @@ import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Icons from '../shared/Icons';
 
-function FullMenu({mode}) {
+function FullMenu({mode, userCheck}) {
 
+    const onlineUser = () => {
+        return (
+            <div>
+                {userCheck}
+            </div>
+        )
+    }
+
+    const profileForm = () => {
+        if (userCheck) {
+            return (
+                <div className="user-button">
+                    <div className="user-info">
+                        <span>Furkan</span>
+                        <span>{" Bozkurt"}</span>
+                    </div>
+                    <div className="ko-icon-holder">
+                        <Icons icon="user" />
+                        <Icons icon="angledown" />
+                    </div>
+                </div>
+            );
+        } else {
+            <div className="ko-icon-holder">
+                <Icons icon="user" link="/pages/login" />
+            </div>
+        }
+    }
 
     return mode === 'desktop' ? (
         <>
@@ -25,9 +53,7 @@ function FullMenu({mode}) {
                 </ul>
             </div>
             <div className="ko-header-secondary-area large-2">
-                <div className="ko-icon-holder">
-                    <Icons icon="user" link="/pages/login" />
-                </div>
+                {profileForm()}
             </div>
         </>
     ) : (

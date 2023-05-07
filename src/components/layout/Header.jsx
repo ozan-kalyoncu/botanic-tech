@@ -2,7 +2,7 @@ import { InView } from 'react-intersection-observer';
 import FullMenu from "../shared/Menu";
 import { Link } from 'react-router-dom';
 
-function Header() {
+function Header({userCheck}) {
 
     const toggleMenu = (e) => {
         const mainHeader = document.querySelector('header.header-main');
@@ -46,7 +46,7 @@ function Header() {
                                     </Link>
                                 </h2>
                             </div>
-                            <FullMenu mode="desktop" />
+                            <FullMenu mode="desktop" userCheck={userCheck} />
                             <div className="ko-mobile-menu columns small-6 medium-6 large-9">
                                 <div className="toggle-wrapper">
                                     <div onClick={(e) => toggleMenu(e)} className="mobile-menu-toggle">
@@ -55,7 +55,7 @@ function Header() {
                                         <span></span>
                                     </div>
                                 </div>
-                                <FullMenu mode="mobile"/>
+                                <FullMenu mode="mobile" userCheck={userCheck}/>
                             </div>
                         </div>
                     </div>
