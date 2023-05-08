@@ -23,7 +23,7 @@ function Icons({icon, link}) {
         )
     } else if ( icon === 'angledown' ) {
         return (
-            <div>
+            <div className="icon--inline icon">
                 <FaAngleDown />
             </div>
         )

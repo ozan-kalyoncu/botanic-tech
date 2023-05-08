@@ -22,7 +22,12 @@ function useLocalStorage() {
         setValue(null);
     };
 
-    return { value, setItem, getItem, removeItem };
+    const removeAll = () => {
+        localStorage.clear();
+        setValue(null);
+    }
+
+    return { value, setItem, getItem, removeItem, removeAll };
 }
 
 

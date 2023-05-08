@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import "../assets/css/subscriptions.css";
+import "../assets/css/payment.css";
 import Payment from "./Payment";
 
 function SubscriptionPlans(params) {
@@ -30,8 +31,12 @@ function SubscriptionPlans(params) {
                 
     }
 
-    const openSidePayments = () => {
-        document.querySelector('.payment-sidebar-container').classList.add('active');
+    const openSidePayments = (e) => {
+        e.preventDefault();
+        let sideBarPayment = document.querySelector('.payment-sidebar-container');
+        sideBarPayment.classList.add('active');
+        sideBarPayment.setAttribute("data-subscription-id", e.target.dataset.subscriptionId);
+
         document.querySelector('.click-capture').classList.add('click-capture-event');
     }
 
@@ -61,7 +66,7 @@ function SubscriptionPlans(params) {
                                 <span className="model-name-sub">/ {plan.subscriptionTypeName}</span>
                             </div>
                             <div className="model--button">
-                                <button onClick={() => openSidePayments()} type="button" name="subscribe" data-subscription-id={plan.subscriptionTypeId} className="button">Subscription Now</button>
+                                <button onClick={(e) => openSidePayments(e)} type="button" name="subscribe" data-subscription-id={plan.subscriptionTypeId} className="button">Subscripe Now</button>
                             </div>
                             <div className="tax-included">Taxes are included.</div>
                         </div>

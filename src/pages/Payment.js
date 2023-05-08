@@ -1,7 +1,9 @@
 import '../assets/css/payment.css';
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Icons from '../components/shared/Icons';
 import { Link } from 'react-router-dom';
+import BotanicContext from '../context/BotanicContext';
+import { useLocalStorage } from '../context/useLocalStorage';
 
 function Payment(params) {
 
@@ -11,6 +13,10 @@ function Payment(params) {
                     "November", "December"];
 
     const currentDate = new Date()
+
+    const { baseUrl, user } = useContext(BotanicContext)
+
+    const { getItem } = useLocalStorage();
 
     const [penaltyDate, setpenaltyDate] = useState({
         'year': currentDate.getFullYear(),
@@ -37,21 +43,42 @@ function Payment(params) {
         return years;
     }
 
+    const setEventListeners = () => {
+        var sideBarPayment = document.querySelector(".payment-sidebar-container"),
+            cardNumberInput = sideBarPayment.querySelector("input#ccn"),
+            cardCvvInput = sideBarPayment.querySelector("input#cardccv2");
+
+        cardNumberInput.addEventListener("input", (e) => {
+            cardNumberInput.setAttribute("value", e.target.value); 
+        });
+        
+        cardCvvInput.addEventListener("input", (e) => {
+            cardCvvInput.setAttribute("value", e.target.value);
+        });
+    }
+
+    const selectEvent = (e) => {
+        e.target.setAttribute("value", e.target.value);
+    }
+
     const userPay = async () => {
 
         var headers = new Headers();
-    
-        headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
+
+        var sideBarPayment = document.querySelector(".payment-sidebar-container"),
+            cardNumber = sideBarPayment.querySelector("input#ccn").value,
+            cardExpireDate = sideBarPayment.querySelector(".form--select select#expireMM").value + sideBarPayment.querySelector(".form--select select#expireYY").value,
+            cardccv2 = sideBarPayment.querySelector("input#cardccv2").value
+        
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", "Bearer " + getItem("token"));
 
         let body = JSON.stringify({
-            "cardNumber": "",
-            "cardExpireDate": "",
-            "cardccv2": "",
-            "subscriptionPlanId": ""
-        })
-
-
-        body = JSON.stringify(body);
+            "cardNumber": cardNumber,
+            "cardExpireDate": cardExpireDate,
+            "cardCvv2": cardccv2,
+            "subscriptionPlanId": Number(sideBarPayment.getAttribute("data-subscription-id"))
+        });
 
         var requestOptions = {
             method: 'POST',
@@ -60,9 +87,22 @@ function Payment(params) {
             redirect: 'follow'
         };
 
-        let response = await fetch("https://mis-botanic.herokuapp.com/api/subscription/pay");
-        let data = response.json()
+        let response = await fetch( baseUrl + "/api/subscription/pay", requestOptions);
+        let data = await response.json();
+
+        console.log(data);
+        if (data.isSuccess) {
+            alert(data.Message);
+            window.location = '/pages/designs';
+        } else {
+            sideBarPayment.classList.add('payment-failed');
+            alert(data.Message);
+        }
     }
+
+    useEffect(() => {
+        setEventListeners();
+    }, []);
 
 
     return (
@@ -74,7 +114,7 @@ function Payment(params) {
                 <div className="payment-navigation">
                     <ul className="navigation-list">
                         <li className="payment-navigation--item initial--item">
-                            <span>Cart</span>
+                            <span>Subscription Plans</span>
                         </li>
                         <li className="nav-separator">
                             <span> &gt; </span>
@@ -91,7 +131,7 @@ function Payment(params) {
                                 <div className="contact">
                                     <p className="form-title">Contact</p>
                                     <div className="user-info--container">
-                                        <span>string123@string.com</span>
+                                        <span>{ user.email }</span>
                                     </div>
                                 </div>
                             </div>
@@ -104,37 +144,43 @@ function Payment(params) {
                                             <div className="title-holder">
                                                 <p className='form-title'>Credit Cart Number:</p>
                                             </div>
-                                            <input id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="16" placeholder="xxxx xxxx xxxx xxxx" />
+                                            <input id="ccn" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="16" placeholder="xxxx xxxx xxxx xxxx" />
                                         </div>
                                         <div className='form-tab'>
                                             <div className="title-holder">
                                                 <p className='form-title'>Expire Date:</p>
                                             </div>
                                             <div className='form--select'>
-                                                <select name='cardExpireDate' id='expireMM'>
+                                                <select onChange={(e) => selectEvent(e)} name='cardExpireDate' id='expireMM'>
                                                     <option value=''>Month</option>
                                                     {months.map((m, i) => {
+                                                        let current = i+1;
+                                                        let value = ""
+                                                        if (current < 10) {
+                                                            value = '0' + current;
+                                                        } else {
+                                                            value = current;
+                                                        }
                                                         return (
-                                                        <option value={i+1}>{m}</option>
-                                                        );  
+                                                        <option value={value}>{m}</option>
+                                                        ); 
                                                     })}
                                                 </select> 
-                                                <select name='cardExpireDate' id='expireYY'>
+                                                <select onChange={(e) => selectEvent(e)} name='cardExpireDate' id='expireYY'>
                                                     <option value=''>Year</option>
                                                     {createExpireYears().map((year, i) => {
                                                         return (
-                                                            <option value={year}>{year}</option>
+                                                            <option value={year % 1000}>{year}</option>
                                                         );
                                                     })}
                                                 </select>
-                                            </div> 
-                                            <input class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4"/>
+                                            </div>    
                                         </div>
                                         <div className='form-tab'>
                                             <div className="title-holder">
                                                 <p className='form-title'>CVC:</p>
                                             </div>
-                                            <input class="cc-cvc" maxlength="3" name="cardccv2" pattern="\d*" placeholder="CVC" type="tel" />
+                                            <input id="cardccv2" className="cc-cvc" maxLength="3" name="cardccv2" pattern="\d*" placeholder="CVC" type="tel" />
                                         </div>
 
                                     </div>

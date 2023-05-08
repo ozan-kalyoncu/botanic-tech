@@ -22,7 +22,7 @@ function SignUp(params) {
         });
     }
 
-    const userRegister = (e) => {
+    const userRegister = async (e) => {
         e.preventDefault();
         let inputs = document.querySelectorAll('.sign-up.login-container input:not(input[name="submit"])');
 
@@ -45,10 +45,15 @@ function SignUp(params) {
             redirect: 'follow'
         };
           
-        fetch("https://mis-botanic.herokuapp.com/api/user/register", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        const response = await fetch("https://mis-botanic.herokuapp.com/api/user/register", requestOptions)
+        const data = await response.json()
+
+        if (await data.isSuccess) {
+            window.location = '/pages/login';
+        } else {
+            console.log(data);
+        }
+        
     }
 
     useEffect(() => {

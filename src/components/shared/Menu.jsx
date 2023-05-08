@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Icons from '../shared/Icons';
 import { useContext } from "react";
 import BotanicContext from "../../context/BotanicContext";
+import { useLocalStorage } from "../../context/useLocalStorage";
+
+
 function FullMenu({mode, userCheck}) {
 
     const { user } = useContext(BotanicContext);
+    const { removeAll } = useLocalStorage();
+    
+    const logout = (e) => {
+        e.preventDefault();
+        removeAll();
+        
+        window.location.href = '/';
+    }
 
     const profileForm = () => {
         if (userCheck) {
@@ -20,12 +31,27 @@ function FullMenu({mode, userCheck}) {
                         <Icons icon="user" />
                         <Icons icon="angledown" />
                     </div>
+                    <div className="user-navigation">
+                        <ul className="user-navigation-list">
+                            <li className="user-navigation--item">
+                                <Link to='/pages/designs'>Make design request</Link>
+                            </li>
+                            <li className="user-navigation--item">
+                                <Link to='/pages/designs'>My requests</Link>
+                            </li>
+                            <li className="user-navigation--item">
+                                <button onClick={logout} className="logout-button">Log out</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             );
         } else {
-            <div className="ko-icon-holder">
-                <Icons icon="user" link="/pages/login" />
-            </div>
+            return (
+                <div className="ko-icon-holder not-user">
+                    <Icons icon="user" link="/pages/login" />
+                </div>
+            );
         }
     }
 

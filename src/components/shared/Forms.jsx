@@ -38,7 +38,7 @@ function Forms({mode, userRegister, userLogin}) {
             <div className="login-form-wrapper columns small-12">
                 <form className="login-form columns">
                     <h2 className="login-title">Log in</h2>
-                    <p className="login-description">Do you have an account with us? Pleae log in </p>
+                    <p className="login-description">Do you have an account with us? Please log in </p>
                     <div className="login-form--inputs">
                         <input type="text" name="email" id="email-input" placeholder="Email Address" />
                         <input type="password" name="password" id="password-input" placeholder="Password" />
