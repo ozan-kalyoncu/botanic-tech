@@ -12,6 +12,7 @@ import Footer from './components/layout/Footer';
 import { useState, useEffect } from 'react';
 import { BotanicProvider } from './context/BotanicContext';
 import { useLocalStorage } from './context/useLocalStorage';
+import MakeRequest from './components/shared/MakeRequest';
 
 function App() {
 
@@ -34,6 +35,14 @@ function App() {
     }
   }
 
+  const openMakeRequestSideBar = (e) => {
+    e.preventDefault();
+    let requestSidebar = document.querySelector('.request.sidebar-container');
+    requestSidebar.classList.add('active');
+    document.querySelector('.click-capture').classList.add('click-capture-event');
+
+  }
+
   useEffect(() => {
     isUserLoggedIn();
   }, []);
@@ -46,7 +55,7 @@ function App() {
     <BotanicProvider user={user} baseUrl="https://mis-botanic.herokuapp.com">
     <Router>
         <div className="App">
-          <Header  userCheck={isUser} />
+          <Header  userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />
 
           <main>
             <Routes>
@@ -58,6 +67,7 @@ function App() {
               <Route path='/subscriptions' element={<SubscriptionPlans />}></Route>
               {isUser ? (<Route path='/pages/designs' element={<Designs />}></Route>) : null}
             </Routes>
+            <MakeRequest />
           </main>
 
           <Footer />

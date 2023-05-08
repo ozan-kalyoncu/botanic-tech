@@ -67,6 +67,8 @@ module.exports = function (grunt) {
          './src/assets/css/login.css': './src/assets/sass/pages/login.scss',
          './src/assets/css/payment.css': './src/assets/sass/pages/payment.scss',
          './src/assets/css/subscriptions.css': './src/assets/sass/pages/subscriptions.scss',
+         './src/assets/css/designs.css': './src/assets/sass/pages/designs.scss',
+         './src/assets/css/make-request.css': './src/assets/sass/pages/make-request.scss',
         }
       },
       dev: {

@@ -6,8 +6,7 @@ import { useContext } from "react";
 import BotanicContext from "../../context/BotanicContext";
 import { useLocalStorage } from "../../context/useLocalStorage";
 
-
-function FullMenu({mode, userCheck}) {
+function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
 
     const { user } = useContext(BotanicContext);
     const { removeAll } = useLocalStorage();
@@ -34,7 +33,7 @@ function FullMenu({mode, userCheck}) {
                     <div className="user-navigation">
                         <ul className="user-navigation-list">
                             <li className="user-navigation--item">
-                                <Link to='/pages/designs'>Make design request</Link>
+                                <button onClick={openMakeRequestSidebar}>Make design request</button>
                             </li>
                             <li className="user-navigation--item">
                                 <Link to='/pages/designs'>My requests</Link>

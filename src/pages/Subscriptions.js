@@ -33,11 +33,11 @@ function SubscriptionPlans(params) {
 
     const openSidePayments = (e) => {
         e.preventDefault();
-        let sideBarPayment = document.querySelector('.payment-sidebar-container');
+        let sideBarPayment = document.querySelector('.payments.sidebar-container');
         sideBarPayment.classList.add('active');
         sideBarPayment.setAttribute("data-subscription-id", e.target.dataset.subscriptionId);
 
-        document.querySelector('.click-capture').classList.add('click-capture-event');
+        //document.querySelector('.click-capture').classList.add('click-capture-event');
     }
 
     useEffect(() => {

@@ -1,7 +1,6 @@
 import '../assets/css/payment.css';
 import React, { useContext, useEffect, useState } from "react";
 import Icons from '../components/shared/Icons';
-import { Link } from 'react-router-dom';
 import BotanicContext from '../context/BotanicContext';
 import { useLocalStorage } from '../context/useLocalStorage';
 
@@ -24,7 +23,7 @@ function Payment(params) {
     });
 
     const closeSideBarPayments = () => {
-        document.querySelector(".payment-sidebar-container").classList.remove("active");
+        document.querySelector(".payments.sidebar-container").classList.remove("active");
         document.querySelector('.click-capture').classList.remove('click-capture-event');
     }
     
@@ -44,7 +43,7 @@ function Payment(params) {
     }
 
     const setEventListeners = () => {
-        var sideBarPayment = document.querySelector(".payment-sidebar-container"),
+        var sideBarPayment = document.querySelector(".payments.sidebar-container"),
             cardNumberInput = sideBarPayment.querySelector("input#ccn"),
             cardCvvInput = sideBarPayment.querySelector("input#cardccv2");
 
@@ -65,7 +64,7 @@ function Payment(params) {
 
         var headers = new Headers();
 
-        var sideBarPayment = document.querySelector(".payment-sidebar-container"),
+        var sideBarPayment = document.querySelector(".payments.sidebar-container"),
             cardNumber = sideBarPayment.querySelector("input#ccn").value,
             cardExpireDate = sideBarPayment.querySelector(".form--select select#expireMM").value + sideBarPayment.querySelector(".form--select select#expireYY").value,
             cardccv2 = sideBarPayment.querySelector("input#cardccv2").value
@@ -106,9 +105,9 @@ function Payment(params) {
 
 
     return (
-        <div className="payment-sidebar-container">
-            <div className="payments-sidebar--info">
-                <div className="payment-site--title">
+        <div className="payments sidebar-container">
+            <div className="sidebar--info">
+                <div className="sidebar--title">
                     <h2>Botanic Tech</h2>
                 </div>
                 <div className="payment-navigation">
