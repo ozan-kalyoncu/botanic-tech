@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Send Data via Multipart Form Data</title>
+</head>
+<body>
+    <div style="margin-bottom: 12px;">
+        <label>Token:</label>
+        <input type="text" id="token" name="token" placeholder="Token">
+    </div>
+    <div>
+        <form id="myForm" enctype="multipart/form-data">
+            <input type="number" name="designTypeId" placeholder="Design Type Id">
+            <input type="number" name="height" placeholder="Height">
+            <input type="number" name="width" placeholder="Width">
+            <input type="text" name="requestMessage" placeholder="RequestMessage">
+
+            <input type="file" name="file">
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+    
+    <script>
+        function submitForm() {
+            var form = document.getElementById("myForm");
+            var formData = new FormData(form);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://mis-botanic.herokuapp.com/api/design/request", true);
+            var token = document.getElementById("token").value;
+            xhr.setRequestHeader("Authorization", "Bearer " + token)
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    // Process the response here
+                    console.log(response);
+                }
+            };
+            xhr.send(formData);
+        }
+    </script>
+</body>
+
+</html>

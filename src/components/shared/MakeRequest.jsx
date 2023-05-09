@@ -118,10 +118,7 @@ function MakeRequest(params) {
                 });
             
                 // Set up our request
-                XHR.open("POST", baseUrl + "/api/design/request");
-                XHR.setRequestHeader("X-Request-With", "XMLHttpRequest");
-                XHR.setRequestHeader("Content-Type", "multipart/form-data");
-                XHR.setRequestHeader("Access-Control-Allow-Origin", "*");
+                XHR.open("POST", baseUrl + "/api/design/request", true);
                 XHR.setRequestHeader("Authorization", "Bearer " + getItem("token"));
 
                 // The data sent is what the user provided in the form
@@ -151,7 +148,7 @@ function MakeRequest(params) {
 
     useEffect(() => {
         getDesignTypes();
-        document.querySelector("select#design-types-select").setAttribute("value", "1");
+        //document.querySelector("select#design-types-select").setAttribute("value", "1");
         setEventListeners();
     }, []);
 
@@ -162,10 +159,10 @@ function MakeRequest(params) {
                     <h2>Make Design Request</h2>
                 </div>
                 <div className="sidebar--body">
-                    <form action="POST" id="requestForm">
+                    <form action="POST" id="requestForm" enctype="multipart/form-data">
                         <div className="design-type design-option">
                             <p className="design-option--title">Design Type:</p>
-                            <select onChange={(e) => selectEvent(e)} name="design-types" id="design-types-select">
+                            {/* <select onChange={(e) => selectEvent(e)} name="designTypeId" id="design-types-select">
                                 {designTypes.map(type => {
                                     return(
                                         <option value={type.value}>
@@ -173,22 +170,24 @@ function MakeRequest(params) {
                                         </option>
                                     )
                                 })}
-                            </select>
+                            </select> */}
+                            <input type="number" name="designTypeId" />
                         </div>
                         <div className="design-sizes design-option">
                             <p className="design-option--title">Size:</p>
                             <div className="size-inputs">
-                                <input type="text" placeholder="Height" name="height" id="height" />
-                                <input type="text" placeholder="Width" name="width" id="width" />
+                                <input type="number" placeholder="Height" name="height" id="height" />
+                                <input type="number" placeholder="Width" name="width" id="width" />
                             </div>
                         </div>
                         <div className="design-request-file design-option">
                             <p className="design-option--title">Your File:</p>
-                            <input onChange={(e) => setRequestFile(e)} type="file" name="designFile" id="designFile" />
+                            <input onChange={(e) => setRequestFile(e)} type="file" name="file" id="designFile" />
                         </div>
                         <div className="design-request-message design-option">
                             <p className="design-option--title">Design Request Message:</p>
-                            <textarea onChange={(e) => setRequestMessage(e)} rows="10" cols="40" id="designMessage" placeholder="Your Design Request Message"></textarea>
+                            {/* <textarea name="requestMessage" onChange={(e) => setRequestMessage(e)} rows="10" cols="40" id="designMessage" placeholder="Your Design Request Message"></textarea> */}
+                            <input type="text" name="requestMessage" />
                         </div>
                         <div className="sidebar-footer">
                             <button onClick={(e) => closeSideBarRequest(e)}>
