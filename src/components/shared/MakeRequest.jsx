@@ -7,7 +7,8 @@ import { useLocalStorage } from "../../context/useLocalStorage";
 function MakeRequest(params) {
 
     const selectEvent = (e) => {
-        e.target.setAttribute("value", e.target.value);
+        var hiddenInput = document.querySelector(`#${e.target.id}+input[name='designTypeId']`);
+        hiddenInput.setAttribute("value", e.target.value);
     }
 
     const {baseUrl, user} = useContext(BotanicContext);
@@ -138,7 +139,8 @@ function MakeRequest(params) {
     }
 
     const setRequestMessage = (e) => {
-        e.target.setAttribute("value", e.target.value);
+        var hiddenInput = document.querySelector(`#${e.target.id}+input[name='requestMessage']`);
+        hiddenInput.setAttribute("value", e.target.value);
     }
 
     const setRequestFile = (e) => {
@@ -159,10 +161,10 @@ function MakeRequest(params) {
                     <h2>Make Design Request</h2>
                 </div>
                 <div className="sidebar--body">
-                    <form action="POST" id="requestForm" enctype="multipart/form-data">
+                    <form action="POST" id="requestForm" encType="multipart/form-data">
                         <div className="design-type design-option">
                             <p className="design-option--title">Design Type:</p>
-                            {/* <select onChange={(e) => selectEvent(e)} name="designTypeId" id="design-types-select">
+                            <select onChange={(e) => selectEvent(e)} name="designTypeId" id="design-types-select">
                                 {designTypes.map(type => {
                                     return(
                                         <option value={type.value}>
@@ -170,8 +172,8 @@ function MakeRequest(params) {
                                         </option>
                                     )
                                 })}
-                            </select> */}
-                            <input type="number" name="designTypeId" />
+                            </select>
+                            <input type="hidden" name="designTypeId" id="design-type-id" />
                         </div>
                         <div className="design-sizes design-option">
                             <p className="design-option--title">Size:</p>
@@ -186,17 +188,20 @@ function MakeRequest(params) {
                         </div>
                         <div className="design-request-message design-option">
                             <p className="design-option--title">Design Request Message:</p>
-                            {/* <textarea name="requestMessage" onChange={(e) => setRequestMessage(e)} rows="10" cols="40" id="designMessage" placeholder="Your Design Request Message"></textarea> */}
-                            <input type="text" name="requestMessage" />
-                        </div>
-                        <div className="sidebar-footer">
-                            <button onClick={(e) => closeSideBarRequest(e)}>
-                                {<Icons icon="chevronleft" link="" />}
-                                <p>Return</p>
-                            </button>
-                            <button type="submit" name="requestSubmit" className="button request-submit">Make Request</button>
+                            <textarea name="requestMessage" onChange={(e) => setRequestMessage(e)} rows="10" cols="40" id="designMessage" placeholder="Your Design Request Message"></textarea>
+                            <input type="hidden" name="requestMessage" id="request-message" />
                         </div>
                     </form>
+                </div>
+                <div className="sidebar-footer">
+                    <button onClick={(e) => closeSideBarRequest(e)}>
+                        {<Icons icon="chevronleft" link="" />}
+                        <p>Return</p>
+                    </button>
+                    <button type="submit" name="requestSubmit" className="button request-submit">
+                        <div class="loader-4 center"><span></span></div>
+                        <span>Make Request</span>
+                    </button>
                 </div>
                 
             </div>
