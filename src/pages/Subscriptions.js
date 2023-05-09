@@ -48,14 +48,14 @@ function SubscriptionPlans(params) {
 
     return (
     <>
-      <div className="subscription-models">
+      <div className="subscription-models row">
         <div className="subscription--title">
             <h2>Subscription Now And Make <br/>A Design Request! </h2>
         </div>
-        <div className="models">
+        <div className="models columns small-12">
             {plans.map(plan => {
                 return (
-                    <div className={"model--item " + plan.subscriptionTypeName.toLowerCase()} key={plan.id}>
+                    <div className={"model--item columns small-12 medium-12 large-6  " + plan.subscriptionTypeName.toLowerCase()} key={plan.id}>
                         <div className="model--item-wrapper">
                             <div className="model--title">
                                 <p>{plan.subscriptionTypeName}</p>

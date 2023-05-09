@@ -88,7 +88,7 @@ function Designs() {
                             <th className="table-navigation-item">Content</th>
                             <th className="table-navigation-item">Status</th>
                             <th className="table-navigation-item">Design Type</th>
-                            <th className="table-navigation-item">File Name</th>
+                            <th className="table-navigation-item">Request Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,7 +96,7 @@ function Designs() {
                             return(
                                 <tr className="table-navigation-list">
                                     <td className="design-request-list-item">
-                                        {request.requestMessage}
+                                        {request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}
                                     </td>
                                     <td className="design-request-list-item">
                                         {request.designStatusName}

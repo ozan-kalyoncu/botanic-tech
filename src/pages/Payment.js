@@ -110,91 +110,93 @@ function Payment(params) {
                 <div className="sidebar--title">
                     <h2>Botanic Tech</h2>
                 </div>
-                <div className="payment-navigation">
-                    <ul className="navigation-list">
-                        <li className="payment-navigation--item initial--item">
-                            <span>Subscription Plans</span>
-                        </li>
-                        <li className="nav-separator">
-                            <span> &gt; </span>
-                        </li>
-                        <li className="payment-navigation--item">
-                            <span>Payment</span>
-                        </li>
-                    </ul>
-                </div>
-                <div className="payment-body">
-                    <div className="payment-information--body">
-                        <div className="payment-body--content">
-                            <div className="content-wrapper">
-                                <div className="contact">
-                                    <p className="form-title">Contact</p>
-                                    <div className="user-info--container">
-                                        <span>{ user.email }</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="credit-cart-services">
-                                <p className="payment-title">Payment</p>
-                                <span className='transaction-secure--text'>All transactions are secure and encrypted.</span>
+                <div className='sidebar--body'>
+                    <div className="payment-navigation">
+                        <ul className="navigation-list">
+                            <li className="payment-navigation--item initial--item">
+                                <span>Subscription Plans</span>
+                            </li>
+                            <li className="nav-separator">
+                                <span> &gt; </span>
+                            </li>
+                            <li className="payment-navigation--item">
+                                <span>Payment</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="payment-body">
+                        <div className="payment-information--body">
+                            <div className="payment-body--content">
                                 <div className="content-wrapper">
-                                    <div className="credit-cart-form">
-                                        <div className='form-tab'>
-                                            <div className="title-holder">
-                                                <p className='form-title'>Credit Cart Number:</p>
-                                            </div>
-                                            <input id="ccn" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="16" placeholder="xxxx xxxx xxxx xxxx" />
+                                    <div className="contact">
+                                        <p className="form-title">Contact</p>
+                                        <div className="user-info--container">
+                                            <span>{ user.email }</span>
                                         </div>
-                                        <div className='form-tab'>
-                                            <div className="title-holder">
-                                                <p className='form-title'>Expire Date:</p>
+                                    </div>
+                                </div>
+                                <div className="credit-cart-services">
+                                    <p className="payment-title">Payment</p>
+                                    <span className='transaction-secure--text'>All transactions are secure and encrypted.</span>
+                                    <div className="content-wrapper">
+                                        <div className="credit-cart-form">
+                                            <div className='form-tab'>
+                                                <div className="title-holder">
+                                                    <p className='form-title'>Credit Cart Number:</p>
+                                                </div>
+                                                <input id="ccn" type="tel" inputMode="numeric" pattern="[0-9\s]{13,19}" autoComplete="cc-number" maxLength="16" placeholder="xxxx xxxx xxxx xxxx" />
                                             </div>
-                                            <div className='form--select'>
-                                                <select onChange={(e) => selectEvent(e)} name='cardExpireDate' id='expireMM'>
-                                                    <option value=''>Month</option>
-                                                    {months.map((m, i) => {
-                                                        let current = i+1;
-                                                        let value = ""
-                                                        if (current < 10) {
-                                                            value = '0' + current;
-                                                        } else {
-                                                            value = current;
-                                                        }
-                                                        return (
-                                                        <option value={value}>{m}</option>
-                                                        ); 
-                                                    })}
-                                                </select> 
-                                                <select onChange={(e) => selectEvent(e)} name='cardExpireDate' id='expireYY'>
-                                                    <option value=''>Year</option>
-                                                    {createExpireYears().map((year, i) => {
-                                                        return (
-                                                            <option value={year % 1000}>{year}</option>
-                                                        );
-                                                    })}
-                                                </select>
-                                            </div>    
-                                        </div>
-                                        <div className='form-tab'>
-                                            <div className="title-holder">
-                                                <p className='form-title'>CVC:</p>
+                                            <div className='form-tab'>
+                                                <div className="title-holder">
+                                                    <p className='form-title'>Expire Date:</p>
+                                                </div>
+                                                <div className='form--select'>
+                                                    <select onChange={(e) => selectEvent(e)} name='cardExpireDate' id='expireMM'>
+                                                        <option value=''>Month</option>
+                                                        {months.map((m, i) => {
+                                                            let current = i+1;
+                                                            let value = ""
+                                                            if (current < 10) {
+                                                                value = '0' + current;
+                                                            } else {
+                                                                value = current;
+                                                            }
+                                                            return (
+                                                            <option value={value}>{m}</option>
+                                                            ); 
+                                                        })}
+                                                    </select> 
+                                                    <select onChange={(e) => selectEvent(e)} name='cardExpireDate' id='expireYY'>
+                                                        <option value=''>Year</option>
+                                                        {createExpireYears().map((year, i) => {
+                                                            return (
+                                                                <option value={year % 1000}>{year}</option>
+                                                            );
+                                                        })}
+                                                    </select>
+                                                </div>    
                                             </div>
-                                            <input id="cardccv2" className="cc-cvc" maxLength="3" name="cardccv2" pattern="\d*" placeholder="CVC" type="tel" />
-                                        </div>
+                                            <div className='form-tab'>
+                                                <div className="title-holder">
+                                                    <p className='form-title'>CVC:</p>
+                                                </div>
+                                                <input id="cardccv2" className="cc-cvc" maxLength="3" name="cardccv2" pattern="\d*" placeholder="CVC" type="tel" />
+                                            </div>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="payment-body--buttons">
-                            <button onClick={() => closeSideBarPayments()} type="button" name="return-to-cart" className="return-to-cart">
-                                {<Icons icon="chevronleft" link="" />}
-                                <p>Return to subscriptions</p>
-                            </button>
-                            <button onClick={() => userPay()} type="button" name="pay" className="button">Pay Now</button>
-                        </div>
-                    </div>             
+                        </div>             
+                    </div>
                 </div>
+                <div className="sidebar-footer">
+                    <button onClick={() => closeSideBarPayments()} type="button" name="return-to-cart" className="return-to-cart">
+                        {<Icons icon="chevronleft" link="" />}
+                        <p>Return to subscriptions</p>
+                    </button>
+                    <button onClick={() => userPay()} type="button" name="pay" className="button">Pay Now</button>
+                </div>                
             </div>
         </div>
     );
