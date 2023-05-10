@@ -2,6 +2,7 @@ import React from "react";
 import { FaRegUser, FaAngleDown } from "react-icons/fa";
 import {Link} from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";
+import { AiOutlineEye } from "react-icons/ai";
 
 function Icons({icon, link}) {
 
@@ -27,7 +28,13 @@ function Icons({icon, link}) {
                 <FaAngleDown />
             </div>
         )
-    };
+    } else if ( icon === 'eye' ) {
+        return (
+            <div className="icon--inline icon">
+                <AiOutlineEye />
+            </div>
+        );
+    }
     
 }
 

@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import BotanicContext from "../context/BotanicContext";
 import { useLocalStorage } from "../context/useLocalStorage";
 import SeeRequestDetails from "../components/shared/SeeRequestDetails";
+import Icons from "../components/shared/Icons";
 
 function Designs() {
 
@@ -77,7 +78,7 @@ function Designs() {
         if (user.userType == 3) {
             return(
                 <td className="design-request-list-item table-button" onClick={() => openDetailsSideBar(id)}>
-                    <button type="button"  className="">See request details</button>
+                    <button type="button"  className=""> <Icons icon="eye" /> </button>
                 </td>
             );
         } else if(user.userType == 2) {

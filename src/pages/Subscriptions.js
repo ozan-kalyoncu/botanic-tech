@@ -1,12 +1,17 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../assets/css/subscriptions.css";
 import "../assets/css/payment.css";
 import Payment from "./Payment";
+import pic from "../assets/img/background-2.png";
+import BotanicContext from "../context/BotanicContext";
+
 
 function SubscriptionPlans(params) {
 
     const [plans, setPlans] = useState([]);
+
+    const { baseUrl, user } = useContext(BotanicContext);
 
     const getSubscriptionPlans = async () => {
         var headers = new Headers();
@@ -19,7 +24,7 @@ function SubscriptionPlans(params) {
         redirect: 'follow'
         };
 
-        let response = await fetch("https://mis-botanic.herokuapp.com/api/subscription/plans", requestOptions)
+        let response = await fetch( baseUrl + "/api/subscription/plans", requestOptions)
         let data = await response.json();
 
         let subscriptions = await data.data;
@@ -73,6 +78,9 @@ function SubscriptionPlans(params) {
                     </div>
                 )
             })}
+        </div>
+        <div className="background-img overlay">
+            <img src={pic} alt="" />
         </div>
       </div>
       <Payment />  
