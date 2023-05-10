@@ -10,10 +10,8 @@ function Header({userCheck, openMakeRequestSideBar}) {
         const capture = document.querySelector('.click-capture');
         
         mainHeader.classList.toggle('is-sticky');
-        mobileMenu.classList.toggle('menu-active');
+        mobileMenu.classList.toggle('active');
         capture.classList.toggle('click-capture-event');
-        e.target.classList.toggle('cross');
-        console.log(e)
     }    
 
     const onscroll = (view) => {
@@ -55,7 +53,6 @@ function Header({userCheck, openMakeRequestSideBar}) {
                                         <span></span>
                                     </div>
                                 </div>
-                                <FullMenu mode="mobile" userCheck={userCheck} openMakeRequestSidebar={openMakeRequestSideBar}/>
                             </div>
                         </div>
                     </div>

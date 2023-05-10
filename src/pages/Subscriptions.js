@@ -37,7 +37,7 @@ function SubscriptionPlans(params) {
         sideBarPayment.classList.add('active');
         sideBarPayment.setAttribute("data-subscription-id", e.target.dataset.subscriptionId);
 
-        //document.querySelector('.click-capture').classList.add('click-capture-event');
+        document.querySelector('.click-capture').classList.add('click-capture-event');
     }
 
     useEffect(() => {

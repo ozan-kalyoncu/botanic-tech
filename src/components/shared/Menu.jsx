@@ -10,6 +10,13 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
 
     const { user } = useContext(BotanicContext);
     const { removeAll } = useLocalStorage();
+
+    const closeMenu = (e) => {
+        const mobileMenu = document.querySelector('.ko-full-menu--mobile');
+        const capture = document.querySelector('.click-capture');
+        mobileMenu.classList.remove('active');
+        capture.classList.remove('click-capture-event');
+    } 
     
     const logout = (e) => {
         e.preventDefault();
@@ -78,7 +85,18 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
         </>
     ) : (
         <>
-            <div className={"ko-full-menu--" + mode + " ko-full-menu"}>
+            <div className={"ko-full-menu--" + mode + " ko-full-menu" + " sidebar-container"}>
+                <div className="ko-mobile-menu--header">
+                    <div className="mobile-menu-toggle">
+                        <div className="toggle-wrapper">
+                            <div onClick={(e) => closeMenu(e)} className="mobile-menu-toggle cross">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <ul className="full-menu-list">
                     <li className="menu-item">
                         <Link className="menu-item-link" to="/">Home</Link>                            

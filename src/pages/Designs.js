@@ -3,10 +3,13 @@ import "../assets/css/designs.css";
 import React, { useContext, useEffect, useState } from "react";
 import BotanicContext from "../context/BotanicContext";
 import { useLocalStorage } from "../context/useLocalStorage";
+import SeeRequestDetails from "../components/shared/SeeRequestDetails";
 
 function Designs() {
 
     const [requests, setRequests] = useState([]);
+
+    const [initialId, setInitialId] = useState("");
 
     const { baseUrl, user } = useContext(BotanicContext);
 
@@ -46,21 +49,35 @@ function Designs() {
         };
 
         let response = await fetch(baseUrl + "/api/design/request/list", requestOptions);
-        let data = await response.json()
+        let data = await response.json();
 
-        data.data.forEach(element => {
-            setRequests(current => [...current, element])
-        });
-        console.log(data.data);
+        if (data.isSuccess) {
+            data.data.forEach(element => {
+                setRequests(current => [...current, element])
+            });
+            setInitialId(data.data[0].id);
+        }
+        
 
     }
 
-    const tableUserButton = () => {
-        console.log(user);
+    const renderDetailsSideBar = () => {
+        return(
+            <SeeRequestDetails requestId={initialId} />
+        );
+    }
+
+    const openDetailsSideBar = (id) => {
+        document.querySelector('.request-detail.sidebar-container').classList.add('active');
+        document.querySelector('.request-detail.sidebar-container').setAttribute('data-request-id', id);
+        document.querySelector('.click-capture').classList.add('click-capture-event');
+    }
+
+    const tableUserButton = (id) => {
         if (user.userType == 3) {
             return(
-                <td className="design-request-list-item table-button">
-                    <button type="button" className="">See request details</button>
+                <td className="design-request-list-item table-button" onClick={() => openDetailsSideBar(id)}>
+                    <button type="button"  className="">See request details</button>
                 </td>
             );
         } else if(user.userType == 2) {
@@ -78,8 +95,13 @@ function Designs() {
         userDesignRequestList();
     }, []);
 
+    useEffect(() => {
+        console.log(initialId);
+    }, [initialId])
+
 
     return (
+        <>
         <div className="designs-container row">
             <div className="columns small-12">
                 <table className="designs-table">
@@ -89,12 +111,13 @@ function Designs() {
                             <th className="table-navigation-item">Status</th>
                             <th className="table-navigation-item">Design Type</th>
                             <th className="table-navigation-item">Request Date</th>
+                            <th className="table-navigation-item">Details</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {requests.map((request) => {
+                        {requests.map((request, index) => {
                             return(
-                                <tr className="table-navigation-list">
+                                <tr className="table-navigation-list" key={index}>
                                     <td className="design-request-list-item">
                                         {request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}
                                     </td>
@@ -107,15 +130,16 @@ function Designs() {
                                     <td className="design-request-list-item">
                                         {request.fileName}
                                     </td>
-                                    {tableUserButton()}
+                                    {tableUserButton(request.id)}
                                 </tr>
                             );
                         })}
                     </tbody>
                 </table>
             </div>
-            
+            {renderDetailsSideBar()}
         </div>
+        </>
     );
 }
 

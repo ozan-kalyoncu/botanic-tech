@@ -105,12 +105,18 @@ function MakeRequest(params) {
 
         window.addEventListener("load", () => {
             function sendData() {
+                var button = document.querySelector("button[name='requestSubmit']");
+                console.log(button);
+                button.classList.add('loading');
+
                 const XHR = new XMLHttpRequest();
                 const FD = new FormData(form);
 
                 // Define what happens on successful data submission
                 XHR.addEventListener("load", (event) => {
                     alert(event.target.responseText);
+                    console.log(requestSideBar);
+                    requestSideBar.classList.remove('active');
                 });
             
                 // Define what happens in case of error
@@ -124,7 +130,7 @@ function MakeRequest(params) {
 
                 // The data sent is what the user provided in the form
                 XHR.send(FD);
-
+                button.classList.remove('loading');
             }
 
             const form = document.querySelector("form#requestForm");
@@ -132,7 +138,6 @@ function MakeRequest(params) {
             // Add 'submit' event handler
             form.addEventListener("submit", (event) => {
                 event.preventDefault();
-
                 sendData();
             });
         })
@@ -150,7 +155,7 @@ function MakeRequest(params) {
 
     useEffect(() => {
         getDesignTypes();
-        //document.querySelector("select#design-types-select").setAttribute("value", "1");
+        document.querySelector("select#design-types-select").setAttribute("value", "1");
         setEventListeners();
     }, []);
 
@@ -162,46 +167,48 @@ function MakeRequest(params) {
                 </div>
                 <div className="sidebar--body">
                     <form action="POST" id="requestForm" encType="multipart/form-data">
-                        <div className="design-type design-option">
-                            <p className="design-option--title">Design Type:</p>
-                            <select onChange={(e) => selectEvent(e)} name="designTypeId" id="design-types-select">
-                                {designTypes.map(type => {
-                                    return(
-                                        <option value={type.value}>
-                                            {type.key}
-                                        </option>
-                                    )
-                                })}
-                            </select>
-                            <input type="hidden" name="designTypeId" id="design-type-id" />
-                        </div>
-                        <div className="design-sizes design-option">
-                            <p className="design-option--title">Size:</p>
-                            <div className="size-inputs">
-                                <input type="number" placeholder="Height" name="height" id="height" />
-                                <input type="number" placeholder="Width" name="width" id="width" />
+                        <div className="sidebar--content">
+                            <div className="design-type design-option">
+                                <p className="design-option--title">Design Type:</p>
+                                <select onChange={(e) => selectEvent(e)} name="designTypeId" id="design-types-select">
+                                    {designTypes.map((type, index) => {
+                                        return(
+                                            <option value={type.value} key={index}>
+                                                {type.key}
+                                            </option>
+                                        )
+                                    })}
+                                </select>
+                                <input type="hidden" name="designTypeId" id="design-type-id" />
+                            </div>
+                            <div className="design-sizes design-option">
+                                <p className="design-option--title">Size:</p>
+                                <div className="size-inputs">
+                                    <input type="number" placeholder="Height" name="height" id="height" />
+                                    <input type="number" placeholder="Width" name="width" id="width" />
+                                </div>
+                            </div>
+                            <div className="design-request-file design-option">
+                                <p className="design-option--title">Your File:</p>
+                                <input onChange={(e) => setRequestFile(e)} type="file" name="file" id="designFile" />
+                            </div>
+                            <div className="design-request-message design-option">
+                                <p className="design-option--title">Design Request Message:</p>
+                                <textarea name="requestMessage" onChange={(e) => setRequestMessage(e)} rows="10" cols="40" id="designMessage" placeholder="Your Design Request Message"></textarea>
+                                <input type="hidden" name="requestMessage" id="request-message" />
                             </div>
                         </div>
-                        <div className="design-request-file design-option">
-                            <p className="design-option--title">Your File:</p>
-                            <input onChange={(e) => setRequestFile(e)} type="file" name="file" id="designFile" />
-                        </div>
-                        <div className="design-request-message design-option">
-                            <p className="design-option--title">Design Request Message:</p>
-                            <textarea name="requestMessage" onChange={(e) => setRequestMessage(e)} rows="10" cols="40" id="designMessage" placeholder="Your Design Request Message"></textarea>
-                            <input type="hidden" name="requestMessage" id="request-message" />
-                        </div>
+                        <div className="sidebar-footer">
+                            <button onClick={(e) => closeSideBarRequest(e)}>
+                                {<Icons icon="chevronleft" link="" />}
+                                <p>Return</p>
+                            </button>
+                            <button type="submit" name="requestSubmit" className="button request-submit">
+                                <div className="loader-4"><span></span></div>
+                                <span>Make Request</span>
+                            </button>
+                        </div>  
                     </form>
-                </div>
-                <div className="sidebar-footer">
-                    <button onClick={(e) => closeSideBarRequest(e)}>
-                        {<Icons icon="chevronleft" link="" />}
-                        <p>Return</p>
-                    </button>
-                    <button type="submit" name="requestSubmit" className="button request-submit">
-                        <div class="loader-4 center"><span></span></div>
-                        <span>Make Request</span>
-                    </button>
                 </div>
                 
             </div>

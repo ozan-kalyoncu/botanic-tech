@@ -195,7 +195,10 @@ function Payment(params) {
                         {<Icons icon="chevronleft" link="" />}
                         <p>Return to subscriptions</p>
                     </button>
-                    <button onClick={() => userPay()} type="button" name="pay" className="button">Pay Now</button>
+                    <button onClick={() => userPay()} type="button" name="pay" className="button">
+                        <span>Pay Now</span>
+                        <div class="loader-4"><span></span></div>
+                    </button>
                 </div>                
             </div>
         </div>

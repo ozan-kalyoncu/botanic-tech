@@ -43,8 +43,9 @@ function App() {
 
   }
 
+
   useEffect(() => {
-    isUserLoggedIn();
+    isUserLoggedIn();    
   }, []);
 
   useEffect(() => {
@@ -70,7 +71,7 @@ function App() {
             <MakeRequest />
           </main>
 
-          <Footer />
+          <Footer userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />
         </div>
       </Router>
       </BotanicProvider>
