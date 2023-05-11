@@ -5,11 +5,9 @@ import { Link } from 'react-router-dom';
 function Header({userCheck, openMakeRequestSideBar}) {
 
     const toggleMenu = (e) => {
-        const mainHeader = document.querySelector('header.header-main');
         const mobileMenu = document.querySelector('.ko-full-menu--mobile');
         const capture = document.querySelector('.click-capture');
         
-        mainHeader.classList.toggle('is-sticky');
         mobileMenu.classList.toggle('active');
         capture.classList.toggle('click-capture-event');
     }    

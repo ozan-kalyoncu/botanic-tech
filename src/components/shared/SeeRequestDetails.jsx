@@ -42,6 +42,19 @@ function SeeRequestDetails({requestId}) {
         }
     }
 
+    const openResponse = () => {
+        
+        var responseSidebar = document.querySelector(".request-response.sidebar-container");
+
+        document.querySelectorAll(".sidebar-container.active").forEach(element => {
+            element.classList.remove('active');
+        });
+
+        responseSidebar.setAttribute("data-request-id", id);
+
+        responseSidebar.classList.add("active");
+    }
+
     const setMutationObserver = () => {
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
@@ -79,7 +92,7 @@ function SeeRequestDetails({requestId}) {
                         <div className="request-content sidebar--body-tab">
                             <div className="title-holder">
                                 <p className="form-title">
-                                    Content
+                                    Content:
                                 </p>
                             </div>
                             <p>
@@ -89,7 +102,7 @@ function SeeRequestDetails({requestId}) {
                         <div className="request-design-type sidebar--body-tab">
                             <div className="title-holder">
                                 <p className="form-title">
-                                    Design Type
+                                    Design Type:
                                 </p>
                             </div>
                             <p>{requestInfo.designTypeName}</p>
@@ -97,7 +110,7 @@ function SeeRequestDetails({requestId}) {
                         <div className="request-date sidebar--body-tab">
                             <div className="title-holder">
                                 <p className="form-title">
-                                    Requested Date
+                                    Requested Date:
                                 </p>
                             </div>
                             <p>{requestInfo.fileName}</p>
@@ -105,17 +118,37 @@ function SeeRequestDetails({requestId}) {
                         <div className="request-status sidebar--body-tab">
                             <div className="title-holder">
                                 <p className="form-title">
-                                    Status
+                                    Status:
                                 </p>
                             </div>
                             <p>{requestInfo.designStatusName}</p>
                         </div>
+                        <div className="request-sizes sidebar--body-tab">
+                            <div className="title-holder">
+                                <p className="form-title">
+                                    Sizes:
+                                </p>
+                            </div>
+                            <div className="size-holder">
+                                <div className="size">
+                                    <p className="size-title">Width:</p>
+                                    <p>{requestInfo.width}</p>
+                                </div>
+                                <div className="size">
+                                    <p className="size-title">Heigth:</p>
+                                    <p>{requestInfo.height}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="sidebar--footer">
+                <div className="sidebar-footer">
                     <button onClick={() => closeSideBarDetails()} type="button" name="" className="button">
                         {<Icons icon="chevronleft" link="" />}
                         <p>Return to requests</p>
+                    </button>
+                    <button onClick={() => openResponse()} type="button" name="see-response" className={ "button " + (requestInfo.designStatusId != 3 ? "unactive" : " ")  }>
+                        <p>See response</p>
                     </button>
                 </div>
             </div>

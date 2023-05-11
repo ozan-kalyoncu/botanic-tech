@@ -11,7 +11,7 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
     const { user } = useContext(BotanicContext);
     const { removeAll } = useLocalStorage();
 
-    const closeMenu = (e) => {
+    const closeMenu = () => {
         const mobileMenu = document.querySelector('.ko-full-menu--mobile');
         const capture = document.querySelector('.click-capture');
         mobileMenu.classList.remove('active');
@@ -24,6 +24,28 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
         
         window.location.href = '/';
     }
+
+    const setEventListeners = () => {
+        var navigationItems = document.querySelectorAll(".user-navigation-list .user-navigation--item");
+        var menuItems = document.querySelectorAll(".ko-full-menu--mobile .menu-item");
+        if (navigationItems) {
+            navigationItems.forEach(element => {
+                element.addEventListener("click", () => {
+                    closeMenu();
+                })
+            });
+        }
+
+        menuItems.forEach(el => {
+            el.addEventListener("click", () => {
+                closeMenu();
+            })
+        });
+    }
+
+    useEffect(() => {
+        setEventListeners();
+    }, []);
 
     const profileForm = () => {
         if (userCheck) {
@@ -61,6 +83,45 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
         }
     }
 
+    const mobileUserForm = () => {
+        if (userCheck) {
+            return(
+                <div className="mobile-user-button">
+                    <div className="user-info">
+                        <span>{ user.firstName }</span>
+                        <span>{ " " + user.lastName }</span>
+                        <div className="ko-icon-holder">
+                            <Icons icon="user" />
+                        </div>
+                    </div>
+                    <div className="user-navigation">
+                        <ul className="user-navigation-list full-menu-list">
+                            <li className="user-navigation--item menu-item">
+                                <button onClick={openMakeRequestSidebar}>Make design request</button>
+                            </li>
+                            <li className="user-navigation--item menu-item">
+                                <Link to='/pages/designs'>My requests</Link>
+                            </li>
+                            <li className="user-navigation--item menu-item">
+                                <button onClick={logout} className="logout-button">Log out</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+            );
+        } else {
+            <div className="mobile-icon-wrapper">
+                <div className="ko-icon-holder">
+                    <Link to="/pages/login">
+                        <span>Log in</span>
+                        <Icons icon="user" link="/pages/login" />
+                    </Link>
+                </div>
+            </div>
+        }
+          
+    }
+
     return mode === 'desktop' ? (
         <>
             <div className={"ko-full-menu--" + mode + " ko-full-menu" + " columns small-9 large-7"}>
@@ -89,7 +150,7 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                 <div className="ko-mobile-menu--header">
                     <div className="mobile-menu-toggle">
                         <div className="toggle-wrapper">
-                            <div onClick={(e) => closeMenu(e)} className="mobile-menu-toggle cross">
+                            <div onClick={() => closeMenu()} className="mobile-menu-toggle cross">
                                 <span></span>
                                 <span></span>
                                 <span></span>
@@ -111,13 +172,7 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                         <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
                     </li>
                 </ul>
-                <div className="mobile-icon-wrapper">
-                    <div className="ko-icon-holder">
-                        <span>Log in</span>
-                        <Icons icon="user" link="/pages/login" />
-                    </div>
-                </div>
-                
+                {mobileUserForm()}
             </div>
         </>
     )

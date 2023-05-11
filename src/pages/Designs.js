@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import BotanicContext from "../context/BotanicContext";
 import { useLocalStorage } from "../context/useLocalStorage";
 import SeeRequestDetails from "../components/shared/SeeRequestDetails";
+import SeeResponse from "../components/shared/SeeResponse";
 import Icons from "../components/shared/Icons";
 
 function Designs() {
@@ -68,6 +69,12 @@ function Designs() {
         );
     }
 
+    const renderResponseSideBar = () => {
+        return(
+            <SeeResponse requestId={initialId} />
+        );
+    }
+
     const openDetailsSideBar = (id) => {
         document.querySelector('.request-detail.sidebar-container').classList.add('active');
         document.querySelector('.request-detail.sidebar-container').setAttribute('data-request-id', id);
@@ -95,11 +102,6 @@ function Designs() {
         hasSubscription();
         userDesignRequestList();
     }, []);
-
-    useEffect(() => {
-        console.log(initialId);
-    }, [initialId])
-
 
     return (
         <>
@@ -139,6 +141,7 @@ function Designs() {
                 </table>
             </div>
             {renderDetailsSideBar()}
+            {renderResponseSideBar()}
         </div>
         </>
     );

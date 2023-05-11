@@ -38,8 +38,12 @@ function App() {
   const openMakeRequestSideBar = (e) => {
     e.preventDefault();
     let requestSidebar = document.querySelector('.request.sidebar-container');
+    document.querySelectorAll(".sidebar-container.active").forEach(element => {
+      element.classList.remove('active');
+    });
     requestSidebar.classList.add('active');
     document.querySelector('.click-capture').classList.add('click-capture-event');
+    
 
   }
 
