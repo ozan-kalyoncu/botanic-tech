@@ -59,11 +59,11 @@ function MakeRequest(params) {
 
 
         var formSubmitButton = requestSideBar.querySelector(".button.request-submit");
-
-        formSubmitButton.addEventListener("submit", (e) => formSubmit(e));
+        
+        formSubmitButton.addEventListener("click", (e) => formSubmit(e));
     }
 
-    const sendData = async () => {
+    const sendData = () => {
 
         const form = document.querySelector("form#requestForm");
         var requestSideBar = document.querySelector(".request.sidebar-container");
@@ -92,10 +92,10 @@ function MakeRequest(params) {
         XHR.send(FD);
     }
 
-    const formSubmit = async (e) => {
+    const formSubmit = (e) => {
         e.preventDefault();
 
-        await sendData();
+        sendData();
         
     }
     

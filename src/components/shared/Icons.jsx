@@ -3,6 +3,8 @@ import { FaRegUser, FaAngleDown } from "react-icons/fa";
 import {Link} from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";
 import { AiOutlineEye } from "react-icons/ai";
+import { BsFillClipboard2CheckFill } from "react-icons/bs";
+import { BsPencilSquare } from "react-icons/bs";
 
 function Icons({icon, link}) {
 
@@ -32,6 +34,18 @@ function Icons({icon, link}) {
         return (
             <div className="icon--inline icon">
                 <AiOutlineEye />
+            </div>
+        );
+    } else if ( icon === 'check' ) {
+        return (
+            <div className="icon--inline icon">
+                <BsFillClipboard2CheckFill />
+            </div>
+        );
+    } else if ( icon === 'pen' ) {
+        return (
+            <div className="icon--inline icon">
+                <BsPencilSquare />
             </div>
         );
     }

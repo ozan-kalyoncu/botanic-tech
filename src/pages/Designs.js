@@ -82,7 +82,7 @@ function Designs() {
         document.querySelector('.click-capture').classList.add('click-capture-event');
     }
 
-    const tableUserButton = (id) => {
+    const tableUserButton = (id, status) => {
         if (user.userType == 3) {
             return(
                 <td className="design-request-list-item table-button" onClick={() => openDetailsSideBar(id)}>
@@ -92,7 +92,7 @@ function Designs() {
         } else if(user.userType == 2) {
             return(
                 <td className="design-request-list-item table-button">
-                    <button type="button" className="">Make a response</button>
+                    <button type="button" className="">{ status === 2 ? <Icons icon="pen" /> : status === 3 ? <Icons icon="check" /> : "Cancelled"}</button>
                 </td>
             );
         }
@@ -100,7 +100,9 @@ function Designs() {
     }
 
     useEffect(() => {
-        hasSubscription();
+        if (user.userType === 3) {
+            hasSubscription();
+        }
         userDesignRequestList();
     }, []);
 
@@ -134,7 +136,10 @@ function Designs() {
                                     <td className="design-request-list-item">
                                         {request.fileName}
                                     </td>
-                                    {tableUserButton(request.id)}
+                                    <td className="design-request-list-item">
+                                        {index + 1}
+                                    </td>
+                                    {tableUserButton(request.id, request.designStatusId)}
                                 </tr>
                             );
                         })}
