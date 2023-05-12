@@ -3,12 +3,14 @@ import { createContext } from "react";
 
 const BotanicContext  = createContext()
 
-export const BotanicProvider = ({children, user, baseUrl}) => {
+export const BotanicProvider = ({children, user, baseUrl, isExpired, hasSubscription}) => {
     return (
         <BotanicContext.Provider
             value={{
                user: user,
-               baseUrl: baseUrl
+               baseUrl: baseUrl,
+               isExpired: isExpired,
+               hasSubscription: hasSubscription
             }}
         >
             {children}

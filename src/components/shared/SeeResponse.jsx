@@ -10,6 +10,8 @@ function SeeResponse({requestId}) {
 
     const [responseInfo, setResponseInfo] = useState("");
 
+    const [fileUrlObj, setFileUrlObj] = useState("");
+
     const { baseUrl, user } = useContext(BotanicContext)
 
     const { getItem } = useLocalStorage();
@@ -35,23 +37,6 @@ function SeeResponse({requestId}) {
         }
     }
 
-    const getResponseFile = async () => {
-        var headers = new Headers();
-
-        headers.append("Content-Type", "application/json");
-        headers.append("Authorization", "Bearer " + getItem("token"));
-
-        var requestOptions = {
-            method: 'GET',
-            headers: headers,
-            redirect: 'follow'
-        };
-
-        let response = await fetch(baseUrl + `/api/design/response/file/${responseInfo.id}`, requestOptions);
-    
-    }
-
-
     const setMutationObserver = () => {
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
@@ -71,8 +56,30 @@ function SeeResponse({requestId}) {
         document.querySelector('.click-capture').classList.remove('click-capture-event');
     }
 
+    const setDownload = async () => {
+
+        var headers = new Headers();
+        
+        headers.append("Authorization", "Bearer " + getItem("token"));
+
+        var requestOptions = {
+            method: 'GET',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        const response = await fetch(baseUrl + "/api/design/response/file/" + responseInfo.id, requestOptions);
+
+        const data = await response.blob();
+
+        const objUrl = window.URL.createObjectURL(data);
+
+        setFileUrlObj(objUrl);
+    }
+
     useEffect(() => {
         setMutationObserver();
+        setDownload();
     }, []);
 
     useEffect(() => {
@@ -105,9 +112,9 @@ function SeeResponse({requestId}) {
                             <div className="title-holder">
                                 <p className="form-title">Response File:</p>
                             </div>
-                            <p>{ responseInfo.fileName }</p>
-                            <div className="response-file"> 
-                                <a href={ baseUrl + "/api/design/response/file/" + responseInfo.id } download>Download File</a>
+                            <div className="response-file content-wrapper"> 
+                                <a href={fileUrlObj} download>Download File</a>
+                                <p>{ responseInfo.fileName }</p>
                             </div>
                         </div>
                     </div>

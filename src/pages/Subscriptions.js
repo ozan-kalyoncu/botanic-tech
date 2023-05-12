@@ -7,7 +7,7 @@ import pic from "../assets/img/background-2.png";
 import BotanicContext from "../context/BotanicContext";
 
 
-function SubscriptionPlans(params) {
+function SubscriptionPlans({isUser}) {
 
     const [plans, setPlans] = useState([]);
 
@@ -37,12 +37,17 @@ function SubscriptionPlans(params) {
     }
 
     const openSidePayments = (e) => {
-        e.preventDefault();
-        let sideBarPayment = document.querySelector('.payments.sidebar-container');
-        sideBarPayment.classList.add('active');
-        sideBarPayment.setAttribute("data-subscription-id", e.target.dataset.subscriptionId);
 
-        document.querySelector('.click-capture').classList.add('click-capture-event');
+        e.preventDefault();
+        if (isUser) {
+            let sideBarPayment = document.querySelector('.payments.sidebar-container');
+            sideBarPayment.classList.add('active');
+            sideBarPayment.setAttribute("data-subscription-id", e.target.dataset.subscriptionId);
+
+            document.querySelector('.click-capture').classList.add('click-capture-event');
+        } else {
+            window.location = '/pages/login';
+        }
     }
 
     useEffect(() => {

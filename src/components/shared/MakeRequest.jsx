@@ -45,51 +45,6 @@ function MakeRequest(params) {
 
     }
 
-    const makeRequest = async (e) => {
-        e.preventDefault();
-
-        var headers = new Headers();
-        
-        headers.append("Content-Type", "application/json");
-        headers.append("Authorization", "Bearer " + getItem("token"));
-
-        var requestSideBar = document.querySelector(".request.sidebar-container"),
-            designTypeId = Number(requestSideBar.querySelector("select#design-types-select").value),
-            height = parseFloat(requestSideBar.querySelector("input#height").value),
-            width = parseFloat(requestSideBar.querySelector("input#width").value),
-            requestMessage = requestSideBar.querySelector("textarea").value
-
-        var body = JSON.stringify({
-            "designTypeId": designTypeId,
-            "file": requestFile,
-            "height": height,
-            "width": width,
-            "requestMessage": requestMessage
-        });
-
-        var requestOptions = {
-            method: 'POST',
-            headers: headers,
-            body: body,
-            redirect: "follow"
-        }
-
-        let response = await fetch( baseUrl + "/api/design/request", requestOptions );
-        let data = await response.json();
-
-
-        console.log(data);
-        console.log(requestFile);
-
-        if (data.isSuccess) {
-            alert(data.Message);
-            window.location = '/pages/designs';
-        } else {
-            requestSideBar.classList.add('request-failed');
-            alert(data.Message);
-        }
-    }
-
     const setEventListeners = () => {
 
         var requestSideBar = document.querySelector(".request.sidebar-container");
@@ -103,46 +58,47 @@ function MakeRequest(params) {
         });
 
 
-        window.addEventListener("load", () => {
-            function sendData() {
-                var button = document.querySelector("button[name='requestSubmit']");
-                console.log(button);
-                button.classList.add('loading');
+        var formSubmitButton = requestSideBar.querySelector(".button.request-submit");
 
-                const XHR = new XMLHttpRequest();
-                const FD = new FormData(form);
-
-                // Define what happens on successful data submission
-                XHR.addEventListener("load", (event) => {
-                    alert(event.target.responseText);
-                    console.log(requestSideBar);
-                    requestSideBar.classList.remove('active');
-                });
-            
-                // Define what happens in case of error
-                XHR.addEventListener("error", (event) => {
-                    alert('Oops! Something went wrong.');
-                });
-            
-                // Set up our request
-                XHR.open("POST", baseUrl + "/api/design/request", true);
-                XHR.setRequestHeader("Authorization", "Bearer " + getItem("token"));
-
-                // The data sent is what the user provided in the form
-                XHR.send(FD);
-                button.classList.remove('loading');
-            }
-
-            const form = document.querySelector("form#requestForm");
-
-            // Add 'submit' event handler
-            form.addEventListener("submit", (event) => {
-                event.preventDefault();
-                sendData();
-            });
-        })
+        formSubmitButton.addEventListener("submit", (e) => formSubmit(e));
     }
 
+    const sendData = async () => {
+
+        const form = document.querySelector("form#requestForm");
+        var requestSideBar = document.querySelector(".request.sidebar-container");
+
+        const XHR = new XMLHttpRequest();
+        const FD = new FormData(form);
+
+        // Define what happens on successful data submission
+        XHR.addEventListener("load", (event) => {
+            alert(event.target.responseText.Message);
+            console.log(requestSideBar);
+            requestSideBar.classList.remove('active');
+            document.querySelector(".click-capture").classList.remove("click-capture-event");
+        });
+    
+        // Define what happens in case of error
+        XHR.addEventListener("error", (event) => {
+            alert('Oops! Something went wrong.');
+        });
+    
+        // Set up our request
+        XHR.open("POST", baseUrl + "/api/design/request", true);
+        XHR.setRequestHeader("Authorization", "Bearer " + getItem("token"));
+
+        // The data sent is what the user provided in the form
+        XHR.send(FD);
+    }
+
+    const formSubmit = async (e) => {
+        e.preventDefault();
+
+        await sendData();
+        
+    }
+    
     const setRequestMessage = (e) => {
         var hiddenInput = document.querySelector(`#${e.target.id}+input[name='requestMessage']`);
         hiddenInput.setAttribute("value", e.target.value);

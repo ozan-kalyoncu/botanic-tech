@@ -16,8 +16,13 @@ import MakeRequest from './components/shared/MakeRequest';
 
 function App() {
 
-  const { getItem } = useLocalStorage();
+  const { getItem, removeAll } = useLocalStorage();
 
+
+  const [baseUrl, setBaseUrl] = useState("https://mis-botanic.herokuapp.com");
+
+  const [isSubscription, setIsSubscription] = useState(false);
+  
   const [isUser, setIsUser] = useState(false);
 
   const [user, setUser] = useState({
@@ -35,21 +40,51 @@ function App() {
     }
   }
 
+
+  const tokenExpireCheck = () => {
+    // if (jwtDecode(getItem("token")).exp < Date.now() / 1000) {
+    //   removeAll();
+    // }
+  }
+
+
+  const hasSubscription = async () => {
+
+    var headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", "Bearer " + getItem("token"));
+
+    var requestOptions = {
+      method: 'GET',
+      headers: headers,
+      redirect: 'follow'
+    };
+
+    let response = await fetch(baseUrl + "/api/subscription/hassubscription", requestOptions);
+    let data = await response.json();
+
+    setIsSubscription(data.data);
+  }
+
   const openMakeRequestSideBar = (e) => {
     e.preventDefault();
-    let requestSidebar = document.querySelector('.request.sidebar-container');
-    document.querySelectorAll(".sidebar-container.active").forEach(element => {
-      element.classList.remove('active');
-    });
-    requestSidebar.classList.add('active');
-    document.querySelector('.click-capture').classList.add('click-capture-event');
+    if (isSubscription) {
+      let requestSidebar = document.querySelector('.request.sidebar-container');
+      document.querySelectorAll(".sidebar-container.active").forEach(element => {
+        element.classList.remove('active');
+      });
+      requestSidebar.classList.add('active');
+      document.querySelector('.click-capture').classList.add('click-capture-event');
+    } else {
+      window.location = "/subscriptions";
+    }
     
-
   }
 
 
   useEffect(() => {
     isUserLoggedIn();    
+    hasSubscription();
   }, []);
 
   useEffect(() => {
@@ -57,7 +92,7 @@ function App() {
   }, [isUser])
 
   return (
-    <BotanicProvider user={user} baseUrl="https://mis-botanic.herokuapp.com">
+    <BotanicProvider user={user} baseUrl={baseUrl} isExpired={tokenExpireCheck} isSubscription={isSubscription}>
     <Router>
         <div className="App">
           <Header  userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />
@@ -69,7 +104,7 @@ function App() {
               <Route path='/pages/contact' element={<Contact />}></Route>
               <Route path='/pages/login' element={<LogIn />}></Route>
               <Route path='/pages/signup' element={<SignUp />}></Route>
-              <Route path='/subscriptions' element={<SubscriptionPlans />}></Route>
+              <Route path='/subscriptions' element={<SubscriptionPlans isUser={isUser} />}></Route>
               {isUser ? (<Route path='/pages/designs' element={<Designs />}></Route>) : null}
             </Routes>
             <MakeRequest />

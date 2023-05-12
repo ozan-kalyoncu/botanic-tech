@@ -12,6 +12,8 @@ function SeeRequestDetails({requestId}) {
 
     const [requestInfo, setRequestInfo] = useState("");
 
+    const [fileUrlObj, setFileUrlObj] = useState("");
+
     const closeSideBarDetails = () => {
         document.querySelector(".request-detail.sidebar-container").classList.remove("active");
         document.querySelector('.click-capture').classList.remove('click-capture-event');
@@ -20,6 +22,27 @@ function SeeRequestDetails({requestId}) {
     const { baseUrl, user } = useContext(BotanicContext)
 
     const { getItem } = useLocalStorage();
+
+    const setDownload = async () => {
+
+        var headers = new Headers();
+        
+        headers.append("Authorization", "Bearer " + getItem("token"));
+
+        var requestOptions = {
+            method: 'GET',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        const response = await fetch(baseUrl + "/api/design/response/file/" + requestInfo.id, requestOptions);
+
+        const data = await response.blob();
+
+        const objUrl = window.URL.createObjectURL(data);
+
+        setFileUrlObj(objUrl);
+    }
 
     const getRequestInfo = async () => {
 
@@ -75,6 +98,7 @@ function SeeRequestDetails({requestId}) {
 
     useEffect(() => {
         getRequestInfo();
+        setDownload();
     }, [id]);
 
     useEffect(() => {
@@ -89,6 +113,14 @@ function SeeRequestDetails({requestId}) {
                         <h2>Details</h2>
                     </div>
                     <div className="sidebar--body">
+                        <div className="request-status sidebar--body-tab">
+                            <div className="title-holder">
+                                <p className="form-title">
+                                    Status:
+                                </p>
+                            </div>
+                            <p>{requestInfo.designStatusName}</p>
+                        </div>
                         <div className="request-content sidebar--body-tab">
                             <div className="title-holder">
                                 <p className="form-title">
@@ -115,13 +147,16 @@ function SeeRequestDetails({requestId}) {
                             </div>
                             <p>{requestInfo.fileName}</p>
                         </div>
-                        <div className="request-status sidebar--body-tab">
+                        <div className="request-file sidebar--body-tab">
                             <div className="title-holder">
                                 <p className="form-title">
-                                    Status:
+                                    File:
                                 </p>
                             </div>
-                            <p>{requestInfo.designStatusName}</p>
+                            <div className="request-file content-wrapper"> 
+                                <a href={fileUrlObj} download>Download File</a>
+                                <p>{ requestInfo.fileName }</p>
+                            </div>
                         </div>
                         <div className="request-sizes sidebar--body-tab">
                             <div className="title-holder">
