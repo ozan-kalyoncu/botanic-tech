@@ -19,9 +19,9 @@ function Designs() {
 
     const hasSubscription = async () => {
         let headers = new Headers();
-        headers.append("Authorization", "Bearer " + getItem("token"));
 
-        let body = ""
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", "Bearer " + getItem("token"));
 
         var requestOptions = {
         method: 'GET',
@@ -30,9 +30,10 @@ function Designs() {
         };
 
         let response = await fetch(baseUrl + "/api/subscription/hassubscription", requestOptions);
-        let data = await response.json()
+        let data = await response.json();
 
         if (!data.data) {
+            alert('You need to subscribe first :))');
             window.location = '/subscriptions';
         } else {
             return true
