@@ -114,7 +114,11 @@ function SeeResponse({requestId}) {
                             </div>
                             <div className="response-file content-wrapper"> 
                                 <a href={fileUrlObj} download>Download File</a>
-                                <p>{ responseInfo.fileName }</p>
+                                { responseInfo.fileName ? (
+                                    <p>{ responseInfo.fileName.substring(0, 30) + "..." }</p>
+                                ) : (
+                                    ""
+                                ) }
                             </div>
                         </div>
                     </div>

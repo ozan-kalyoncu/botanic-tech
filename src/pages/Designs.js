@@ -6,6 +6,7 @@ import { useLocalStorage } from "../context/useLocalStorage";
 import SeeRequestDetails from "../components/shared/SeeRequestDetails";
 import SeeResponse from "../components/shared/SeeResponse";
 import Icons from "../components/shared/Icons";
+import MakeResponse from "../components/shared/MakeResponse";
 
 function Designs() {
 
@@ -60,13 +61,17 @@ function Designs() {
             });
             setInitialId(data.data[0].id);
         }
-        
-
     }
 
     const renderDetailsSideBar = () => {
         return(
             <SeeRequestDetails requestId={initialId} />
+        );
+    }
+
+    const renderMakeResponseSideBar = () => {
+        return(
+            <MakeResponse requestId={initialId} />
         );
     }
 
@@ -82,6 +87,21 @@ function Designs() {
         document.querySelector('.click-capture').classList.add('click-capture-event');
     }
 
+    const openMakeResponseSideBar = (id) => {
+        document.querySelector('.make-response.sidebar-container').classList.add('active');
+        document.querySelector('.make-response.sidebar-container').setAttribute('data-response-id', id);
+
+        document.querySelector('.request-detail.sidebar-container').style.opacity = "0";
+        document.querySelector('.request-detail.sidebar-container').classList.add('reversed');
+        setTimeout(() => {
+            document.querySelector('.request-detail.sidebar-container').style.opacity = "1";
+            document.querySelector('.request-detail.sidebar-container').classList.add('active');
+        }, 500);
+        document.querySelector('.request-detail.sidebar-container').setAttribute('data-request-id', id);
+
+        document.querySelector('.click-capture').classList.add('click-capture-event');
+    }
+
     const tableUserButton = (id, status) => {
         if (user.userType == 3) {
             return(
@@ -91,7 +111,7 @@ function Designs() {
             );
         } else if(user.userType == 2) {
             return(
-                <td className="design-request-list-item table-button">
+                <td className="design-request-list-item table-button" onClick={() => openMakeResponseSideBar(id)}>
                     <button type="button" className="">{ status === 2 ? <Icons icon="pen" /> : status === 3 ? <Icons icon="check" /> : "Cancelled"}</button>
                 </td>
             );
@@ -113,6 +133,7 @@ function Designs() {
                 <table className="designs-table">
                     <thead className="designs-table-header">
                         <tr className="table-navigation-list">
+                            <th className="table-navigation-item"></th>
                             <th className="table-navigation-item">Content</th>
                             <th className="table-navigation-item">Status</th>
                             <th className="table-navigation-item">Design Type</th>
@@ -125,6 +146,9 @@ function Designs() {
                             return(
                                 <tr className="table-navigation-list" key={index}>
                                     <td className="design-request-list-item">
+                                        {index + 1}
+                                    </td>
+                                    <td className="design-request-list-item">
                                         {request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}
                                     </td>
                                     <td className="design-request-list-item">
@@ -136,9 +160,6 @@ function Designs() {
                                     <td className="design-request-list-item">
                                         {request.fileName}
                                     </td>
-                                    <td className="design-request-list-item">
-                                        {index + 1}
-                                    </td>
                                     {tableUserButton(request.id, request.designStatusId)}
                                 </tr>
                             );
@@ -148,6 +169,7 @@ function Designs() {
             </div>
             {renderDetailsSideBar()}
             {renderResponseSideBar()}
+            {renderMakeResponseSideBar()}
         </div>
         </>
     );

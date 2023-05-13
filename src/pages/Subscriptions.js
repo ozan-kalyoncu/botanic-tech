@@ -84,8 +84,9 @@ function SubscriptionPlans({isUser}) {
                 )
             })}
         </div>
-        <div className="background-img overlay">
+        <div className="background-img">
             <img src={pic} alt="" />
+            <div className="image-overlay"></div>
         </div>
       </div>
       <Payment />  

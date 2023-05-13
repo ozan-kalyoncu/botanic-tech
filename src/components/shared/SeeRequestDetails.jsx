@@ -155,7 +155,9 @@ function SeeRequestDetails({requestId}) {
                             </div>
                             <div className="request-file content-wrapper"> 
                                 <a href={fileUrlObj} download>Download File</a>
-                                <p>{ requestInfo.fileName }</p>
+                                { requestInfo.fileName ? (
+                                    <p>{ requestInfo.fileName.substring(0, 30) + "..." }</p>
+                                ) : "" }
                             </div>
                         </div>
                         <div className="request-sizes sidebar--body-tab">
@@ -177,15 +179,19 @@ function SeeRequestDetails({requestId}) {
                         </div>
                     </div>
                 </div>
-                <div className="sidebar-footer">
-                    <button onClick={() => closeSideBarDetails()} type="button" name="" className="button">
-                        {<Icons icon="chevronleft" link="" />}
-                        <p>Return to requests</p>
-                    </button>
-                    <button onClick={() => openResponse()} type="button" name="see-response" className={ "button " + (requestInfo.designStatusId != 3 ? "unactive" : " ")  }>
-                        <p>See response</p>
-                    </button>
-                </div>
+                {user.userType == 3 ? (
+                    <div className="sidebar-footer">
+                        <button onClick={() => closeSideBarDetails()} type="button" name="" className="button">
+                            {<Icons icon="chevronleft" link="" />}
+                            <p>Return to requests</p>
+                        </button>
+                        <button onClick={() => openResponse()} type="button" name="see-response" className={ "button " + (requestInfo.designStatusId != 3 ? "unactive" : " ")  }>
+                            <p>See response</p>
+                        </button>
+                    </div>
+                ) : (
+                    ""
+                )}
             </div>
         </div>
     );

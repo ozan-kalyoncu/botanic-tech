@@ -110,14 +110,16 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                 </div> 
             );
         } else {
-            <div className="mobile-icon-wrapper">
-                <div className="ko-icon-holder">
-                    <Link to="/pages/login">
-                        <span>Log in</span>
-                        <Icons icon="user" link="/pages/login" />
-                    </Link>
+            return(
+                <div className="mobile-icon-wrapper">
+                    <div className="ko-icon-holder">
+                        <Link to="/pages/login">
+                            <span>Log in</span>
+                            <Icons icon="user" link="/pages/login" />
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            );
         }
           
     }
