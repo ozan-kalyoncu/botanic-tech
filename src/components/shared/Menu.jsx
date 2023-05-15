@@ -61,11 +61,23 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                     </div>
                     <div className="user-navigation">
                         <ul className="user-navigation-list">
-                            <li className="user-navigation--item">
-                                <button onClick={openMakeRequestSidebar}>Make design request</button>
-                            </li>
-                            <li className="user-navigation--item">
-                                <Link to='/pages/designs'>My requests</Link>
+                            {user.userType == 3 ? (
+                                <li className="user-navigation--item menu-item">
+                                    <button onClick={openMakeRequestSidebar}>Make design request</button>
+                                </li>
+                            ): (
+                                ""
+                            )}
+                            <li className="user-navigation--item menu-item">
+                                <Link to='/pages/designs'>
+                                {
+                                    user.userType == 3 ? (
+                                       "My Requests"
+                                    ) : (
+                                       "See Requests"
+                                    )
+                                }
+                                </Link>
                             </li>
                             <li className="user-navigation--item">
                                 <button onClick={logout} className="logout-button">Log out</button>
@@ -96,11 +108,23 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                     </div>
                     <div className="user-navigation">
                         <ul className="user-navigation-list full-menu-list">
+                            {user.userType == 3 ? (
+                                <li className="user-navigation--item menu-item">
+                                    <button onClick={openMakeRequestSidebar}>Make design request</button>
+                                </li>
+                            ): (
+                                ""
+                            )}
                             <li className="user-navigation--item menu-item">
-                                <button onClick={openMakeRequestSidebar}>Make design request</button>
-                            </li>
-                            <li className="user-navigation--item menu-item">
-                                <Link to='/pages/designs'>My requests</Link>
+                                <Link to='/pages/designs'>
+                                {
+                                    user.userType == 3 ? (
+                                        'My Requests'
+                                    ) : (
+                                        'See Requests'
+                                    )
+                                }
+                                </Link>
                             </li>
                             <li className="user-navigation--item menu-item">
                                 <button onClick={logout} className="logout-button">Log out</button>

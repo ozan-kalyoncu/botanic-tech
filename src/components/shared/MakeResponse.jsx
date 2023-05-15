@@ -18,21 +18,11 @@ function MakeResponse({requestId}) {
 
     const { getItem } = useLocalStorage();
 
-    const setEventListeners = () => {
-
-        var responseSidebar = document.querySelector(".make-response.sidebar-container");
-
-        var formSubmitButton = responseSidebar.querySelector(".button.response-submit");
-        
-        if (formSubmitButton) {
-            formSubmitButton.addEventListener("click", (e) => formSubmit(e));            
-        }
-    }
-
     const sendData = () => {
 
         const form = document.querySelector("form#responseForm");
         var responeSideBar = document.querySelector(".make-response.sidebar-container");
+        var detailsSideBar = document.querySelector(".request-detail.sidebar-container");
 
         const XHR = new XMLHttpRequest();
         const FD = new FormData(form);
@@ -42,6 +32,7 @@ function MakeResponse({requestId}) {
             alert(JSON.stringify(event));
             console.log(responeSideBar);
             responeSideBar.classList.remove('active');
+            detailsSideBar.classList.remove('active');
             document.querySelector(".click-capture").classList.remove("click-capture-event");
         });
     
@@ -129,7 +120,7 @@ function MakeResponse({requestId}) {
                         <input type="hidden" name="designRequestId" id="design-type-id" value={request.id} />
                         <div className="response-message design-option">
                             <p className="design-option--title">Design Request Message:</p>
-                            <textarea name="responsetMessage" onChange={(e) => setResponseMessage(e)} rows="10" cols="40" id="responseMessage" placeholder="Response Message"></textarea>
+                            <textarea onChange={(e) => setResponseMessage(e)} rows="10" cols="40" id="responseMessage" placeholder="Response Message"></textarea>
                             <input type="hidden" name="responseMessage" id="response-message" />
                         </div>
                         <div className="response-file design-option">
@@ -142,7 +133,7 @@ function MakeResponse({requestId}) {
                             {<Icons icon="chevronleft" link="" />}
                             <p>Return</p>
                         </button>
-                        <button type="submit" name="responseSubmit" className="button response-submit">
+                        <button type="submit" name="responseSubmit" className="button response-submit" onClick={(e) => formSubmit(e)}>
                             <div className="loader-4"><span></span></div>
                             <span>Send Response</span>
                         </button>
@@ -160,7 +151,7 @@ function MakeResponse({requestId}) {
 
     useEffect(() => {
         setMutationObserver();
-        setEventListeners();
+    
     }, []);
 
     useEffect(() => {

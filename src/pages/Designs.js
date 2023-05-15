@@ -10,6 +10,12 @@ import MakeResponse from "../components/shared/MakeResponse";
 
 function Designs() {
 
+    const [paginateNumber, setPaginateNumber] = useState(1);
+
+    const [designStatuses, setDesignStatuses] = useState([]);
+
+    const [statusFilter, setstatusFilter] = useState("0");
+
     const [requests, setRequests] = useState([]);
 
     const [initialId, setInitialId] = useState("");
@@ -52,7 +58,15 @@ function Designs() {
         redirect: 'follow'
         };
 
-        let response = await fetch(baseUrl + "/api/design/request/list", requestOptions);
+        var filter = "&designStatusId=";
+
+        if (statusFilter != 0) {
+            filter += statusFilter; 
+        }
+        
+        console.log(filter);
+
+        let response = await fetch(baseUrl + "/api/design/request/list?page=" + paginateNumber + (statusFilter != 0 ? filter : ""), requestOptions);
         let data = await response.json();
 
         if (data.isSuccess) {
@@ -61,6 +75,31 @@ function Designs() {
             });
             setInitialId(data.data[0].id);
         }
+    }
+
+    const getDesignStatuses = async () => {
+        
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", "Bearer " + getItem("token"));
+
+        var requestOptions = {
+        method: 'GET',
+        headers: headers,
+        redirect: 'follow'
+        };
+
+        let response = await fetch(baseUrl + "/api/constant/enum/designstatuses" , requestOptions);
+        let data = await response.json();
+
+        if (data.isSuccess) {
+            setDesignStatuses(data.data);
+        }
+        
+    }
+
+    const setStatusFilter = (e) => {
+        setstatusFilter(e.target.value);
     }
 
     const renderDetailsSideBar = () => {
@@ -119,17 +158,79 @@ function Designs() {
         
     }
 
+    const renderTableBody = () => {
+        return(
+            <tbody>
+                {requests.map((request, index) => {
+                    return(
+                        <tr className="table-navigation-list" key={index}>
+                            <td className="design-request-list-item">
+                                {index + 1}
+                            </td>
+                            <td className="design-request-list-item">
+                                {request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}
+                            </td>
+                            <td className="design-request-list-item">
+                                {request.designStatusName}
+                            </td>
+                            <td className="design-request-list-item">
+                                {request.designTypeName}
+                            </td>
+                            <td className="design-request-list-item">
+                                {request.fileName}
+                            </td>
+                            {tableUserButton(request.id, request.designStatusId)}
+                        </tr>
+                    );
+                })}
+            </tbody>
+        );
+    }
+
+    const parseTableBody = () => {
+        
+        var tableBody = renderTableBody();
+
+        var table =  document.querySelector("table.designs-table"),
+            body = table.querySelector("tbody");
+        
+        table.removeChild(body);
+        table.appendChild(tableBody);
+    }
+
     useEffect(() => {
         if (user.userType === 3) {
             hasSubscription();
         }
         userDesignRequestList();
+        getDesignStatuses();
     }, []);
+
+    useEffect(() => {
+        userDesignRequestList();
+    }, [statusFilter]);
+
+    useEffect(() => {
+        parseTableBody();
+    }, [requests]);
 
     return (
         <>
         <div className="designs-container row">
             <div className="columns small-12">
+                <div className="status-filter">
+                    <div className="filter--title">
+                        Filter:
+                    </div>
+                    <select name="statusPicker" onChange={(e) => setStatusFilter(e)}>
+                        <option value="0" key="0">All</option>
+                        {designStatuses.map((status, index) => {
+                            return(
+                                <option value={status.value} key={index + 1}>{status.key}</option>
+                            );
+                        })}
+                    </select>
+                </div>
                 <table className="designs-table">
                     <thead className="designs-table-header">
                         <tr className="table-navigation-list">
@@ -141,31 +242,13 @@ function Designs() {
                             <th className="table-navigation-item">Details</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {requests.map((request, index) => {
-                            return(
-                                <tr className="table-navigation-list" key={index}>
-                                    <td className="design-request-list-item">
-                                        {index + 1}
-                                    </td>
-                                    <td className="design-request-list-item">
-                                        {request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}
-                                    </td>
-                                    <td className="design-request-list-item">
-                                        {request.designStatusName}
-                                    </td>
-                                    <td className="design-request-list-item">
-                                        {request.designTypeName}
-                                    </td>
-                                    <td className="design-request-list-item">
-                                        {request.fileName}
-                                    </td>
-                                    {tableUserButton(request.id, request.designStatusId)}
-                                </tr>
-                            );
-                        })}
-                    </tbody>
+                    {renderTableBody()}
                 </table>
+                <div className="paginate-links">
+                    <ul className="paginate-list">
+                        
+                    </ul>
+                </div>
             </div>
             {renderDetailsSideBar()}
             {renderResponseSideBar()}
