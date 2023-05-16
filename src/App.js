@@ -18,7 +18,6 @@ function App() {
 
   const { getItem, removeAll } = useLocalStorage();
 
-
   const [baseUrl, setBaseUrl] = useState("https://mis-botanic.herokuapp.com");
 
   const [isSubscription, setIsSubscription] = useState(false);

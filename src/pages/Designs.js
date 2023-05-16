@@ -8,15 +8,17 @@ import SeeResponse from "../components/shared/SeeResponse";
 import Icons from "../components/shared/Icons";
 import MakeResponse from "../components/shared/MakeResponse";
 
+import ReactDOMServer from "react-dom/server";
+
 function Designs() {
 
     const [paginateNumber, setPaginateNumber] = useState(1);
 
     const [designStatuses, setDesignStatuses] = useState([]);
 
-    const [statusFilter, setstatusFilter] = useState("0");
-
     const [requests, setRequests] = useState([]);
+
+    const [statusFilter, setstatusFilter] = useState(0);
 
     const [initialId, setInitialId] = useState("");
 
@@ -58,21 +60,21 @@ function Designs() {
         redirect: 'follow'
         };
 
-        var filter = "&designStatusId=";
+        var filter = "?designStatusId=";
 
         if (statusFilter != 0) {
             filter += statusFilter; 
         }
         
-        console.log(filter);
-
-        let response = await fetch(baseUrl + "/api/design/request/list?page=" + paginateNumber + (statusFilter != 0 ? filter : ""), requestOptions);
+        let response = await fetch(baseUrl + "/api/design/request/list" + (statusFilter != 0 ? filter : ""), requestOptions);
         let data = await response.json();
 
+        const tempArr = [];
         if (data.isSuccess) {
             data.data.forEach(element => {
-                setRequests(current => [...current, element])
+                tempArr.push(element);
             });
+            setRequests(tempArr);
             setInitialId(data.data[0].id);
         }
     }
@@ -188,31 +190,27 @@ function Designs() {
     }
 
     const parseTableBody = () => {
-        
-        var tableBody = renderTableBody();
+        const htmlElement = ReactDOMServer.renderToString(renderTableBody());
+        const parser = new DOMParser();
 
-        var table =  document.querySelector("table.designs-table"),
-            body = table.querySelector("tbody");
+        const domElement = parser.parseFromString(htmlElement, 'text/xml');
         
-        table.removeChild(body);
-        table.appendChild(tableBody);
+
+        const table = document.querySelector('.designs-table');
+
+        table.replaceChild(domElement.querySelector('tbody'), table.querySelector('tbody'));
     }
 
     useEffect(() => {
         if (user.userType === 3) {
             hasSubscription();
         }
-        userDesignRequestList();
         getDesignStatuses();
     }, []);
 
     useEffect(() => {
         userDesignRequestList();
     }, [statusFilter]);
-
-    useEffect(() => {
-        parseTableBody();
-    }, [requests]);
 
     return (
         <>
