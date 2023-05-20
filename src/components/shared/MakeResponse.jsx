@@ -129,7 +129,7 @@ function MakeResponse({requestId}) {
                         </div>
                     </div>
                     <div className="sidebar-footer">
-                        <button onClick={(e) => closeSideBarResponse(e)}>
+                        <button className="button" onClick={(e) => closeSideBarResponse(e)}>
                             {<Icons icon="chevronleft" link="" />}
                             <p>Return</p>
                         </button>

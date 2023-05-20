@@ -179,19 +179,15 @@ function SeeRequestDetails({requestId}) {
                         </div>
                     </div>
                 </div>
-                {user.userType == 3 ? (
-                    <div className="sidebar-footer">
-                        <button onClick={() => closeSideBarDetails()} type="button" name="" className="button">
-                            {<Icons icon="chevronleft" link="" />}
-                            <p>Return to requests</p>
-                        </button>
-                        <button onClick={() => openResponse()} type="button" name="see-response" className={ "button " + (requestInfo.designStatusId != 3 ? "unactive" : " ")  }>
-                            <p>See response</p>
-                        </button>
-                    </div>
-                ) : (
-                    ""
-                )}
+                <div className="sidebar-footer">
+                    <button onClick={() => closeSideBarDetails()} type="button" name="" className="button">
+                        {<Icons icon="chevronleft" link="" />}
+                        <p>Return to requests</p>
+                    </button>
+                    <button onClick={() => openResponse()} type="button" name="see-response" className={ "button " + (requestInfo.designStatusId != 3 ? "unactive" : " ")  }>
+                        <p>See response</p>
+                    </button>
+                </div>
             </div>
         </div>
     );

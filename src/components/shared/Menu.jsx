@@ -135,7 +135,7 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
             );
         } else {
             return(
-                <div className="mobile-icon-wrapper">
+                <div className="mobile-icon-wrapper menu-item">
                     <div className="ko-icon-holder">
                         <Link to="/pages/login">
                             <span>Log in</span>

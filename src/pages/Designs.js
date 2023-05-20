@@ -63,9 +63,9 @@ function Designs() {
         var filter = "?designStatusId=";
 
         if (statusFilter != 0) {
-            filter += statusFilter; 
+            filter += statusFilter;
         }
-        
+
         let response = await fetch(baseUrl + "/api/design/request/list" + (statusFilter != 0 ? filter : ""), requestOptions);
         let data = await response.json();
 
@@ -80,7 +80,7 @@ function Designs() {
     }
 
     const getDesignStatuses = async () => {
-        
+
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         headers.append("Authorization", "Bearer " + getItem("token"));
@@ -97,7 +97,7 @@ function Designs() {
         if (data.isSuccess) {
             setDesignStatuses(data.data);
         }
-        
+
     }
 
     const setStatusFilter = (e) => {
@@ -132,73 +132,29 @@ function Designs() {
         document.querySelector('.make-response.sidebar-container').classList.add('active');
         document.querySelector('.make-response.sidebar-container').setAttribute('data-response-id', id);
 
-        document.querySelector('.request-detail.sidebar-container').style.opacity = "0";
-        document.querySelector('.request-detail.sidebar-container').classList.add('reversed');
-        setTimeout(() => {
-            document.querySelector('.request-detail.sidebar-container').style.opacity = "1";
-            document.querySelector('.request-detail.sidebar-container').classList.add('active');
-        }, 500);
-        document.querySelector('.request-detail.sidebar-container').setAttribute('data-request-id', id);
-
         document.querySelector('.click-capture').classList.add('click-capture-event');
     }
 
     const tableUserButton = (id, status) => {
         if (user.userType == 3) {
             return(
-                <td className="design-request-list-item table-button" onClick={() => openDetailsSideBar(id)}>
+                <div className="design-request-list-item table-button" onClick={() => openDetailsSideBar(id)}>
                     <button type="button"  className=""> <Icons icon="eye" /> </button>
-                </td>
+                </div>
             );
         } else if(user.userType == 2) {
             return(
-                <td className="design-request-list-item table-button" onClick={() => openMakeResponseSideBar(id)}>
-                    <button type="button" className="">{ status === 2 ? <Icons icon="pen" /> : status === 3 ? <Icons icon="check" /> : "Cancelled"}</button>
-                </td>
+                <div className="design-card--item-buttons">
+                     <div className="design-request-list-item table-button" onClick={() => openDetailsSideBar(id)}>
+                        <button type="button"  className=""> <Icons icon="eye" /> </button>
+                    </div>
+                    <div className="design-request-list-item table-button" onClick={() => openMakeResponseSideBar(id)}>
+                        <button type="button" className="">{ status === 2 ? <Icons icon="pen" /> : status === 3 ? <Icons icon="check" /> : "Cancelled"}</button>
+                    </div>
+                </div>
             );
         }
-        
-    }
 
-    const renderTableBody = () => {
-        return(
-            <tbody>
-                {requests.map((request, index) => {
-                    return(
-                        <tr className="table-navigation-list" key={index}>
-                            <td className="design-request-list-item">
-                                {index + 1}
-                            </td>
-                            <td className="design-request-list-item">
-                                {request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}
-                            </td>
-                            <td className="design-request-list-item">
-                                {request.designStatusName}
-                            </td>
-                            <td className="design-request-list-item">
-                                {request.designTypeName}
-                            </td>
-                            <td className="design-request-list-item">
-                                {request.fileName}
-                            </td>
-                            {tableUserButton(request.id, request.designStatusId)}
-                        </tr>
-                    );
-                })}
-            </tbody>
-        );
-    }
-
-    const parseTableBody = () => {
-        const htmlElement = ReactDOMServer.renderToString(renderTableBody());
-        const parser = new DOMParser();
-
-        const domElement = parser.parseFromString(htmlElement, 'text/xml');
-        
-
-        const table = document.querySelector('.designs-table');
-
-        table.replaceChild(domElement.querySelector('tbody'), table.querySelector('tbody'));
     }
 
     useEffect(() => {
@@ -213,10 +169,9 @@ function Designs() {
     }, [statusFilter]);
 
     return (
-        <>
         <div className="designs-container row">
             <div className="columns small-12">
-                <div className="status-filter">
+                <div className="status-filter columns">
                     <div className="filter--title">
                         Filter:
                     </div>
@@ -229,22 +184,50 @@ function Designs() {
                         })}
                     </select>
                 </div>
-                <table className="designs-table">
-                    <thead className="designs-table-header">
-                        <tr className="table-navigation-list">
-                            <th className="table-navigation-item"></th>
-                            <th className="table-navigation-item">Content</th>
-                            <th className="table-navigation-item">Status</th>
-                            <th className="table-navigation-item">Design Type</th>
-                            <th className="table-navigation-item">Request Date</th>
-                            <th className="table-navigation-item">Details</th>
-                        </tr>
-                    </thead>
-                    {renderTableBody()}
-                </table>
+                <div className="designs-table">
+                    {requests.map((request, index) => {
+                            return(
+                                <div className="columns">
+                                    <div className="design-item--card" key={index}>
+                                        <div className="design-item--card-wrapper">
+                                            <div className="design-request-card-item">
+                                                <p>{request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}</p>
+                                                <div className="category-line">
+                                                    <div className="line"></div>
+                                                </div>
+                                                <span className="category">Message</span>    
+                                            </div>
+                                            <div className="design-request-card-item">
+                                                    <p>{request.designStatusName}</p>
+                                                    <div className="category-line">
+                                                        <div className="line"></div>
+                                                    </div>
+                                                    <span className="category">Status</span>
+                                            </div>
+                                            <div className="design-request-card-item">
+                                                    <p>{request.designTypeName}</p>
+                                                    <div className="category-line">
+                                                        <div className="line"></div>
+                                                    </div>
+                                                    <span className="category">Type</span>
+                                            </div>
+                                            <div className="design-request-card-item">
+                                                    {request.fileName}
+                                                    <div className="category-line">
+                                                        <div className="line"></div>
+                                                    </div>
+                                                    <span className="category">Date</span>
+                                            </div>
+                                        </div>
+                                        {tableUserButton(request.id, request.designStatusId)}
+                                    </div>
+                                </div>
+                            );
+                    })}
+                </div>
                 <div className="paginate-links">
                     <ul className="paginate-list">
-                        
+
                     </ul>
                 </div>
             </div>
@@ -252,7 +235,6 @@ function Designs() {
             {renderResponseSideBar()}
             {renderMakeResponseSideBar()}
         </div>
-        </>
     );
 }
 

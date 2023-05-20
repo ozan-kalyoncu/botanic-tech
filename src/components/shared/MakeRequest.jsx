@@ -155,7 +155,7 @@ function MakeRequest(params) {
                             </div>
                         </div>
                         <div className="sidebar-footer">
-                            <button onClick={(e) => closeSideBarRequest(e)}>
+                            <button className="button" onClick={(e) => closeSideBarRequest(e)}>
                                 {<Icons icon="chevronleft" link="" />}
                                 <p>Return</p>
                             </button>
