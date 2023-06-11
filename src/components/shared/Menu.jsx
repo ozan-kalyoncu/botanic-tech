@@ -43,6 +43,28 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
         });
     }
 
+    const loadMainMenu = () => {
+        return(
+            <ul className="full-menu-list">
+                <li className="menu-item">
+                    <Link className="menu-item-link" to="/">Home</Link>                            
+                </li>
+                <li className="menu-item">
+                    <Link className="menu-item-link" to="/pages/about">About Us</Link>
+                </li>
+                <li className="menu-item">
+                    <Link className="menu-item-link" to="/collection/plants">Plants</Link>
+                </li>
+                <li className="menu-item">
+                    <Link className="menu-item-link" to="/collection/decorationitems">Decoration</Link>
+                </li>
+                <li className="menu-item">
+                    <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
+                </li>
+            </ul>
+        );
+    }
+
     useEffect(() => {
         setEventListeners();
     }, []);
@@ -150,21 +172,8 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
 
     return mode === 'desktop' ? (
         <>
-            <div className={"ko-full-menu--" + mode + " ko-full-menu" + " columns small-9 large-7"}>
-                <ul className="full-menu-list">
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/">Home</Link>                            
-                    </li>
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/about">About Us</Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/contact">Contact</Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
-                    </li>
-                </ul>
+            <div className={"ko-full-menu--" + mode + " ko-full-menu" + " columns small-9 large-8"}>
+                {loadMainMenu()}
             </div>
             <div className="ko-header-secondary-area large-2">
                 {profileForm()}
@@ -184,20 +193,7 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                         </div>
                     </div>
                 </div>
-                <ul className="full-menu-list">
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/">Home</Link>                            
-                    </li>
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/about">About Us</Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/pages/contact">Contact</Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
-                    </li>
-                </ul>
+                {loadMainMenu()}
                 {mobileUserForm()}
             </div>
         </>

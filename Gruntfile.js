@@ -70,6 +70,9 @@ module.exports = function (grunt) {
          './src/assets/css/designs.css': './src/assets/sass/pages/designs.scss',
          './src/assets/css/make-request.css': './src/assets/sass/pages/make-request.scss',
          './src/assets/css/see-request-details.css': './src/assets/sass/pages/see-request-details.scss',
+         './src/assets/css/collection-banner.css': './src/assets/sass/pages/collection-banner.scss',
+         './src/assets/css/collection-grid.css': './src/assets/sass/pages/collection-grid.scss',
+         './src/assets/css/product-card.css': './src/assets/sass/shared/product-card.scss'
         }
       },
       dev: {
@@ -103,7 +106,7 @@ module.exports = function (grunt) {
           'assets/css/blocks/formula-1-team-standing.css': 'assets/sass/blocks/formula-1-team-standing.scss',
           'assets/css/blocks/horizontal-menu.css': 'assets/sass/blocks/horizontal-menu.scss',
           'assets/css/blocks/breadcrumb.css': 'assets/sass/blocks/breadcrumb.scss',
-          'assets/css/blocks/image.css': 'assets/sass/blocks/image.scss',
+          'assets/css/blocks/image.css': 'assets/sass/blocks/image.scss'
         },
       }
     },

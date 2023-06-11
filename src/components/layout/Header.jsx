@@ -35,7 +35,7 @@ function Header({userCheck, openMakeRequestSideBar}) {
                 <div className="row expended">
                     <div className="columns small-12">
                         <div className='header-row'>
-                            <div className="logo-holder columns small-6 medium-6 large-3">
+                            <div className="logo-holder columns small-6 medium-6 large-2">
                                 <h2 className="logo--text">
                                     <Link to="/">
                                     Botanic Tech

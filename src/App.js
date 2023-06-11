@@ -1,27 +1,40 @@
 import './assets/css/App.css';
+/* Page Imports */
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Designs from './pages/Designs';
+import PlantCollection from './pages/PlantCollection';
 import SubscriptionPlans from './pages/Subscriptions';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import { useState, useEffect } from 'react';
+import DecorationItemCollection from './pages/DecorationItemCollection';
+
+/* Content Provider And Storage Imports */
 import { BotanicProvider } from './context/BotanicContext';
 import { useLocalStorage } from './context/useLocalStorage';
+
+/* React Imports */
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+/* Shared Import */
 import MakeRequest from './components/shared/MakeRequest';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+
+
+
+
 
 function App() {
 
   const { getItem, removeAll } = useLocalStorage();
 
-  const [baseUrl, setBaseUrl] = useState("https://mis-botanic.herokuapp.com");
-
   const [isSubscription, setIsSubscription] = useState(false);
   
+  const [baseUrl, setBaseUrl] = useState("https://mis-botanic.herokuapp.com");
+
   const [isUser, setIsUser] = useState(false);
 
   const [user, setUser] = useState({
@@ -91,7 +104,7 @@ function App() {
   }, [isUser])
 
   return (
-    <BotanicProvider user={user} baseUrl={baseUrl} isExpired={tokenExpireCheck} isSubscription={isSubscription}>
+    <BotanicProvider user={user} isExpired={tokenExpireCheck} isSubscription={isSubscription}>
     <Router>
         <div className="App">
           <Header  userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />
@@ -104,6 +117,8 @@ function App() {
               <Route path='/pages/login' element={<LogIn />}></Route>
               <Route path='/pages/signup' element={<SignUp />}></Route>
               <Route path='/subscriptions' element={<SubscriptionPlans isUser={isUser} />}></Route>
+              <Route path='/collection/plants' element={<PlantCollection isUser={isUser} />}></Route>
+              <Route path='/collection/decorationitems' element={<DecorationItemCollection isUser={isUser} />}></Route>
               {isUser ? (<Route path='/pages/designs' element={<Designs />}></Route>) : null}
             </Routes>
             <MakeRequest />
