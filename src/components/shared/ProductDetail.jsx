@@ -4,11 +4,11 @@ import Icons from "./Icons";
 import { useState } from "react";
 import BotanicContext from "../../context/BotanicContext";
 
-function ProductDetail({products, productId}) {
+function ProductDetail({productType, productId}) {
 
     const [id, setId] = useState(productId);
     const [product, setProduct] = useState();
-    const [productImageURL, setProuctImageUrl] = useState();
+    const [productImageURL, setProductImageUrl] = useState();
     const {baseUrl} = useContext(BotanicContext)
 
     const closeSideBarDetails = () => {
@@ -16,27 +16,9 @@ function ProductDetail({products, productId}) {
         document.querySelector('.click-capture').classList.remove('click-capture-event');
     }
 
-    const getProductImageURL = async () => {
-
-        let apiType = "";
-
-        if ("decorationItemTypeId" in product) {
-            apiType = "decorationitem"; 
-        } else {
-            apiType = "plant";
-        }
-
-        const response = await fetch(baseUrl + `/api/product/${apiType}/image/${id}`);
-        const data = await response.blob();
-
-        const objUrl = window.URL.createObjectURL(data);
-
-        setProuctImageUrl(objUrl);
-    }
-
     const getProduct = async() => {
 
-        const response = await fetch(baseUrl + `/api/product/plant/${id}`);
+        const response = await fetch(baseUrl + `/api/product/${productType}/${id}`);
         const data = await response.json();
         
         if (data.isSuccess) {
@@ -49,6 +31,7 @@ function ProductDetail({products, productId}) {
             mutations.forEach(function(mutation) {
                 if (mutation.type === "attributes") {
                     setId(mutation.target.dataset.id);
+                    setProductImageUrl(mutation.target.dataset.imageUrl);
                 }
             });
         });    
@@ -57,13 +40,6 @@ function ProductDetail({products, productId}) {
             attributes: true //configure it to listen to attribute changes
         });
     }
-
-    useEffect(() => {
-        async function fetchImage() {
-            await getProductImageURL();
-        }
-        fetchImage();
-    }, [id]);
 
     useEffect(() => {
         setMutationObserver();
@@ -93,11 +69,22 @@ function ProductDetail({products, productId}) {
                                 <img src={productImageURL} alt="" />
                             </div>
                             <div className="sidebar--body-tab">
-                                <div className="title-holder">
-                                    <p className="form-title">Description</p>
-                                </div>
-                                <p>{product.description.substring(0, 30) + (product.description.length <= 30 ? '' : '...')}</p>
+                                <p>{product.description}</p>
                             </div>
+                            {product.regions && (
+                                <div className="sidebar--body-tab">
+                                    <div className="tab-title">
+                                        <p className="form-title">Regions:</p>
+                                    </div>
+                                    <ul className="region-list">
+                                    {product.regions.map(region => {
+                                        return(
+                                            <li className="region-item">{region.name}</li>
+                                        );
+                                    })}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     ): (
                         <div className="sidebar--body"></div>

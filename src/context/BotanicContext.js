@@ -9,12 +9,31 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
 
     const [plants, setPlants] = useState([]);
     const [items, setItems] = useState([]);
+    const [productTypes, setProductTypes] = useState([]);
+
+    const setProductType = (product ,id) => {
+        Object.keys(productTypes).map(key => {
+            if (productTypes[key].value == id) {
+                if (id != 1) {
+                    product.typeName = productTypes[key].key;
+                } else {
+                    product.typeName = product.decorationItemTypeName;
+                }
+            }
+        });
+     }
 
     const loadPlants = async() => {
         const response = await fetch(baseUrl + "/api/product/plant/list");
         const data = await response.json();
+
+        const products = await data.data; 
+
         if (data.isSuccess) {
-            setPlants(data.data);
+            Object.keys(products).map(key => {
+                setProductType( products[key] ,products[key].productTypeId);          
+            });
+            setPlants(products);
         } else {
             throw new Error("Plants couldn't find!");
         }
@@ -24,23 +43,41 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
         const response = await fetch(baseUrl + "/api/product/decorationitem/list");
         const data = await response.json();
 
+        const products = await data.data;
+
         if (data.isSuccess) {
-            Object.keys(data.data).map(key => {
-                setItems( (current) => [...current ,data.data[key]]);
+            Object.keys(products).map(key => {
+                setProductType( products[key] ,products[key].productTypeId);          
             });
+            setItems(products);
         } else {
             throw new Error("Items couldn't find!");
         }
     }
 
+    const getProductTypes = async () => {
+
+        const response = await fetch(baseUrl + `/api/constant/enum/producttypes`);
+        const data = await response.json();
+        if (data.isSuccess) {
+            setProductTypes(data.data);
+        }
+    }
+
+    useEffect(() => {
+        async function loadProductTypes(){
+            await getProductTypes();
+        }
+        loadProductTypes();
+    }, []);
+
     useEffect(() => {
         async function loadProductList(){
             await loadPlants();
             await loadItems();
-
         }
         loadProductList();
-    }, []);
+    }, [productTypes]);
 
     const shuffle = (array) => {
         let currentIndex = array.length,  randomIndex;
@@ -68,7 +105,8 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
                isExpired: isExpired,
                hasSubscription: hasSubscription,
                plants: plants,
-               decorationItems: items
+               decorationItems: items,
+               types: productTypes
             }}
         >
             {children}

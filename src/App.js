@@ -9,7 +9,8 @@ import Designs from './pages/Designs';
 import PlantCollection from './pages/PlantCollection';
 import SubscriptionPlans from './pages/Subscriptions';
 import DecorationItemCollection from './pages/DecorationItemCollection';
-
+import PageTemplate from './pages/PageTemplate';
+import CollectionTemplate from './pages/CollectionTemplate';
 /* Content Provider And Storage Imports */
 import { BotanicProvider } from './context/BotanicContext';
 import { useLocalStorage } from './context/useLocalStorage';
@@ -22,10 +23,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MakeRequest from './components/shared/MakeRequest';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-
-
-
-
 
 function App() {
 
@@ -107,24 +104,22 @@ function App() {
     <BotanicProvider user={user} isExpired={tokenExpireCheck} isSubscription={isSubscription}>
     <Router>
         <div className="App">
-          <Header  userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />
-
-          <main>
             <Routes>
-              <Route path='/' element={<Home />}></Route>
-              <Route path='/pages/about' element={<About />}></Route>
-              <Route path='/pages/contact' element={<Contact />}></Route>
-              <Route path='/pages/login' element={<LogIn />}></Route>
-              <Route path='/pages/signup' element={<SignUp />}></Route>
-              <Route path='/subscriptions' element={<SubscriptionPlans isUser={isUser} />}></Route>
-              <Route path='/collection/plants' element={<PlantCollection isUser={isUser} />}></Route>
-              <Route path='/collection/decorationitems' element={<DecorationItemCollection isUser={isUser} />}></Route>
-              {isUser ? (<Route path='/pages/designs' element={<Designs />}></Route>) : null}
+              <Route path='' element={<PageTemplate userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />}>
+                <Route path='/' element={<Home />}></Route>
+                <Route path='/pages/about' element={<About />}></Route>
+                <Route path='/pages/contact' element={<Contact />}></Route>
+                <Route path='/pages/login' element={<LogIn />}></Route>
+                <Route path='/pages/signup' element={<SignUp />}></Route>
+                {isUser ? (<Route path='/pages/designs' element={<Designs />}></Route>) : null}
+              </Route>
+              <Route path='' element={<CollectionTemplate userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />}>
+                <Route path='/subscriptions' element={<SubscriptionPlans isUser={isUser} />}></Route>
+                <Route path='/collection/plants' element={<PlantCollection isUser={isUser} />}></Route>
+                <Route path='/collection/decorationitems' element={<DecorationItemCollection isUser={isUser} />}></Route>
+              </Route>
             </Routes>
             <MakeRequest />
-          </main>
-
-          <Footer userCheck={isUser} openMakeRequestSideBar={openMakeRequestSideBar} />
         </div>
       </Router>
       </BotanicProvider>

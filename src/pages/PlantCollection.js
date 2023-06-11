@@ -10,7 +10,7 @@ import "../assets/css/product-card.css";
 
 function PlantCollection(props) {
 
-    const {plants, baseUrl} = useContext(BotanicContext);
+    const {plants, baseUrl, types} = useContext(BotanicContext);
     const [regions, setregions] = useState([]);    
 
     const loadRegions = async() => {
@@ -25,7 +25,7 @@ function PlantCollection(props) {
     }
 
     useEffect(() => {
-        loadRegions();   
+        loadRegions(); 
     }, []);
 
     return (
@@ -52,7 +52,7 @@ function PlantCollection(props) {
                 </div>
             </div>
         </div>
-        <ProductDetail products={plants} productId="0" />
+        <ProductDetail productType="plant" productId="0" />
         </>
     );
 }

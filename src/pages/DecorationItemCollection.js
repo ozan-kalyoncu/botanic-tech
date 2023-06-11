@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import BotanicContext from '../context/BotanicContext';
 import bannerSrc from "../assets/img/botanic-photo-7.png";
 import ProductCard from '../components/shared/ProductCard';
+import ProductDetail from '../components/shared/ProductDetail';
 import CollectionBanner from '../components/layout/CollectionBanner';
 import "../assets/css/collection-banner.css";
 import "../assets/css/collection-grid.css";
@@ -9,7 +10,7 @@ import "../assets/css/product-card.css";
 
 function DecorationItemCollection(props) {
 
-    const {decorationItems, baseUrl} = useContext(BotanicContext);
+    const {decorationItems, baseUrl, types} = useContext(BotanicContext);
     const [itemTypes, setitemTypes] = useState([]);
 
     const loadItemTypes = async() => {
@@ -22,7 +23,7 @@ function DecorationItemCollection(props) {
             throw new Error("Item Types couldn't load!");
         }
     }
-
+    
     useEffect(() => {
         loadItemTypes();
     }, []);
@@ -39,7 +40,7 @@ function DecorationItemCollection(props) {
                             {decorationItems.map((product, ind) => {
                                 return(
                                     <>
-                                    <li className="collection-product__item grid__item" key={ product.id } >
+                                    <li className="collection-product__item grid__item" key={ product.id } product-id= { product.id } >
                                         <ProductCard product={product} />
                                     </li>
                                     </>
@@ -51,6 +52,7 @@ function DecorationItemCollection(props) {
                 </div>
             </div>
         </div>
+        <ProductDetail productType="decorationitem" productId="0" />
         </>
     );
 }

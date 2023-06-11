@@ -1,16 +1,19 @@
 import { InView } from 'react-intersection-observer';
 import FullMenu from "../shared/Menu";
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-function Header({userCheck, openMakeRequestSideBar}) {
+function Header({userCheck, openMakeRequestSideBar, transparent}) {
 
+     
     const toggleMenu = (e) => {
         const mobileMenu = document.querySelector('.ko-full-menu--mobile');
         const capture = document.querySelector('.click-capture');
         
         mobileMenu.classList.toggle('active');
         capture.classList.toggle('click-capture-event');
-    }    
+    }   
+
 
     const onscroll = (view) => {
         const mainHeader = document.querySelector('header.header-main');
@@ -26,12 +29,13 @@ function Header({userCheck, openMakeRequestSideBar}) {
             
         }
     }
+
     return (
         <>
         <InView className="sticky--header" as="div" onChange={(inView, entry) => onscroll(inView)}>
             
         </InView>
-        <header className="header-main">
+        <header className={"header-main " + ( transparent ? "transparent--true" : "")}>
                 <div className="row expended">
                     <div className="columns small-12">
                         <div className='header-row'>

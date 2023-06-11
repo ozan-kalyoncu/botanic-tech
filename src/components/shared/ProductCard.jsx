@@ -4,7 +4,7 @@ import Icons from "./Icons";
 
 function ProductCard({product}) {
 
-    const {baseUrl} = useContext(BotanicContext);
+    const {baseUrl, types} = useContext(BotanicContext);
 
     const [productImageURL, setProuctImageUrl] = useState();
 
@@ -30,6 +30,7 @@ function ProductCard({product}) {
         let sidebar = document.querySelector(".product-detail.sidebar-container");
         document.querySelector('.click-capture').classList.add('click-capture-event');
         sidebar.setAttribute("data-id", product.id);
+        sidebar.setAttribute("data-image-url", productImageURL);
         sidebar.classList.add("active");
     }
 
@@ -38,7 +39,9 @@ function ProductCard({product}) {
             await getProductImageURL();
         }
         fetchImage();
+
     }, []);
+
 
     return (
         <div className="product-card">
@@ -55,15 +58,14 @@ function ProductCard({product}) {
                 </figure>
                 <div className="product-content">
                     <div className="product-type">
-                        <span>Type</span>
+                        <span>{ product.typeName }</span>
                     </div>
                     <h3 className="product-title">{product.name}</h3>
                     <p className="product-description">{ product.description }</p>
                 </div>
             </div>
         </div>
-    )
-
+    );
 }
 
 export default ProductCard;
