@@ -119,7 +119,6 @@ function App() {
                 <Route path='/collection/decorationitems' element={<DecorationItemCollection isUser={isUser} />}></Route>
               </Route>
             </Routes>
-            <MakeRequest />
         </div>
       </Router>
       </BotanicProvider>
