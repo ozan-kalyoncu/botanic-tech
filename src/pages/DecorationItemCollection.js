@@ -10,8 +10,9 @@ import "../assets/css/product-card.css";
 
 function DecorationItemCollection(props) {
 
-    const {decorationItems, baseUrl, types} = useContext(BotanicContext);
+    const {decorationItems, baseUrl, types, loadItems} = useContext(BotanicContext);
     const [itemTypes, setitemTypes] = useState([]);
+
 
     const loadItemTypes = async() => {
         const response = await fetch(baseUrl + "/api/constant/enum/decorationitemtypes");
@@ -24,6 +25,16 @@ function DecorationItemCollection(props) {
         }
     }
     
+    const filter = async (e) => {
+        e.stopPropagation();
+        if (e.target.value == 0) {
+            loadItems();
+        } else {
+            loadItems(e.target.value);
+        }
+    }
+
+
     useEffect(() => {
         loadItemTypes();
     }, []);
@@ -35,19 +46,41 @@ function DecorationItemCollection(props) {
             <div className="row expanded">
                 <div className="columns small-12">
                     <div className="collection-wrapper">
-                    <div id="ProductGridContainer">
-                        <ul className="product-grid">
-                            {decorationItems.map((product, ind) => {
-                                return(
-                                    <>
-                                    <li className="collection-product__item grid__item" key={ product.id } product-id= { product.id } >
-                                        <ProductCard product={product} />
-                                    </li>
-                                    </>
-                                );
-                            })}
-                        </ul>                        
-                    </div>
+                    <div className="status-filter collection-filter">
+                            <div className="filter--title">
+                                Filter:
+                            </div>
+                            <div className='typePicker collection-filter-picker'>
+                                <p>
+                                    <span>Type:</span>
+                                </p>
+                                <select name="type" className='typelist filter-list' onChange={async(e) => await filter(e)}>
+                                    <option className='typelist--item collection-filter--item' value="0">                                                
+                                        <span>All</span>
+                                    </option>
+                                    {itemTypes.map(itemType => {
+                                        return(
+                                            <option className='typelist--item collection-filter--item' value={itemType.value}>                                                
+                                                <span>{ itemType.key }</span>
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="ProductGridContainer">
+                            <ul className="product-grid">
+                                {decorationItems.map((product, ind) => {
+                                    return(
+                                        <>
+                                        <li className="collection-product__item grid__item" key={ product.id } product-id= { product.id } >
+                                            <ProductCard product={product} />
+                                        </li>
+                                        </>
+                                    );
+                                })}
+                            </ul>                        
+                        </div>
                     </div>
                 </div>
             </div>

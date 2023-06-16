@@ -39,8 +39,8 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
         }
     }
 
-    const loadItems = async() => {
-        const response = await fetch(baseUrl + "/api/product/decorationitem/list");
+    const loadItems = async(type="") => {
+        const response = await fetch(baseUrl + `/api/product/decorationitem/list?decorationItemTypeId=${type}`);
         const data = await response.json();
 
         const products = await data.data;
@@ -108,6 +108,7 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
                setPlants: setPlants,
                loadPlants: loadPlants,
                decorationItems: items,
+               loadItems: loadItems,
                types: productTypes
             }}
         >
