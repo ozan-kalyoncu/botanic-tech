@@ -9,11 +9,23 @@ function ProductDetail({productType, productId}) {
     const [id, setId] = useState(productId);
     const [product, setProduct] = useState();
     const [productImageURL, setProductImageUrl] = useState();
-    const {baseUrl} = useContext(BotanicContext)
+    const {baseUrl, types} = useContext(BotanicContext)
 
     const closeSideBarDetails = () => {
         document.querySelector(".product-detail.sidebar-container").classList.remove("active");
         document.querySelector('.click-capture').classList.remove('click-capture-event');
+    }
+
+    const setProductType = (product ,id) => {
+        Object.keys(types).map(key => {
+            if (types[key].value == id) {
+                if (id != 1) {
+                    product.typeName = types[key].key;
+                } else {
+                    product.typeName = product.decorationItemTypeName;
+                }
+            }
+        });
     }
 
     const getProduct = async() => {
@@ -22,6 +34,7 @@ function ProductDetail({productType, productId}) {
         const data = await response.json();
         
         if (data.isSuccess) {
+            setProductType(data.data, data.data.productTypeId);
             setProduct(data.data);
         }
     }
@@ -62,14 +75,23 @@ function ProductDetail({productType, productId}) {
                     {product ? (
                         <div className="sidebar--body">
                             <div className="content-wrapper">
-                                <p className="form-title">Product</p>
+                                <p className="form-title">Title</p>
                                 <div className="designer-info">{ product.name }</div>
                             </div>
                             <div className="detail-bar-image">
                                 <img src={productImageURL} alt="" />
                             </div>
                             <div className="sidebar--body-tab">
+                                <div className="tab-title">
+                                    <p className="form-title">Description</p>
+                                </div>
                                 <p>{product.description}</p>
+                            </div>
+                            <div className="sidebar--body-tab">
+                                <div className="tab-title">
+                                    <p className="form-title">Product Type:</p>
+                                    <p>{product.typeName}</p>
+                                </div>
                             </div>
                             {product.regions && (
                                 <div className="sidebar--body-tab">

@@ -21,7 +21,7 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
                 }
             }
         });
-     }
+    }
 
     const loadPlants = async(region="", type="") => {
         const response = await fetch(baseUrl + `/api/product/plant/list?regionId=${region}&plantTypeId=${type}`);
