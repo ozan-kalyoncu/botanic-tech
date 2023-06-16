@@ -81,12 +81,14 @@ function ProductDetail({productType, productId}) {
                             <div className="detail-bar-image">
                                 <img src={productImageURL} alt="" />
                             </div>
-                            <div className="sidebar--body-tab">
-                                <div className="tab-title">
-                                    <p className="form-title">Description</p>
+                            {product.description && (
+                                <div className="sidebar--body-tab">
+                                    <div className="tab-title">
+                                        <p className="form-title">Description</p>
+                                    </div>
+                                    <p>{product.description}</p>
                                 </div>
-                                <p>{product.description}</p>
-                            </div>
+                            )}
                             <div className="sidebar--body-tab">
                                 <div className="tab-title">
                                     <p className="form-title">Product Type:</p>
