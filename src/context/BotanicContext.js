@@ -23,8 +23,8 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
         });
      }
 
-    const loadPlants = async() => {
-        const response = await fetch(baseUrl + "/api/product/plant/list");
+    const loadPlants = async(region="", type="") => {
+        const response = await fetch(baseUrl + `/api/product/plant/list?regionId=${region}&plantTypeId=${type}`);
         const data = await response.json();
 
         const products = await data.data; 
@@ -105,6 +105,8 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
                isExpired: isExpired,
                hasSubscription: hasSubscription,
                plants: plants,
+               setPlants: setPlants,
+               loadPlants: loadPlants,
                decorationItems: items,
                types: productTypes
             }}

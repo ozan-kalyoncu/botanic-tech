@@ -61,7 +61,7 @@ function ProductCard({product}) {
                         <span>{ product.typeName }</span>
                     </div>
                     <h3 className="product-title">{product.name}</h3>
-                    <p className="product-description">{ product.description }</p>
+                    <p className="product-description">{ product.description.substring(0, 50) + (product.description.length <= 50 ? '' : '...') }</p>
                 </div>
             </div>
         </div>
