@@ -1,10 +1,11 @@
-
+import '../../assets/css/see-request-details.css';
 
 import React, { useEffect, useState, useContext } from "react";
 import Icons from "./Icons";
 import { useLocalStorage } from "../../context/useLocalStorage";
 import BotanicContext from "../../context/BotanicContext";
-import '../../assets/css/see-request-details.css';
+import Moment from "moment";
+
 
 function SeeRequestDetails({requestId}) {
 
@@ -94,6 +95,7 @@ function SeeRequestDetails({requestId}) {
 
     useEffect(() => {
         setMutationObserver();
+        Moment.locale("en");
     }, []);
 
     useEffect(() => {
@@ -145,7 +147,7 @@ function SeeRequestDetails({requestId}) {
                                     Requested Date:
                                 </p>
                             </div>
-                            <p>{requestInfo.fileName}</p>
+                            <p>{Moment(requestInfo.dateCreated).format("d MMM, Y")}</p>
                         </div>
                         <div className="request-file sidebar--body-tab">
                             <div className="title-holder">

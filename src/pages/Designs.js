@@ -7,8 +7,7 @@ import SeeRequestDetails from "../components/shared/SeeRequestDetails";
 import SeeResponse from "../components/shared/SeeResponse";
 import Icons from "../components/shared/Icons";
 import MakeResponse from "../components/shared/MakeResponse";
-
-import ReactDOMServer from "react-dom/server";
+import Moment from "moment";
 
 function Designs() {
 
@@ -25,6 +24,8 @@ function Designs() {
     const { baseUrl, user } = useContext(BotanicContext);
 
     const { getItem } = useLocalStorage();
+
+    
 
     const hasSubscription = async () => {
         let headers = new Headers();
@@ -161,6 +162,7 @@ function Designs() {
         if (user.userType === 3) {
             hasSubscription();
         }
+        Moment.locale("en");
         getDesignStatuses();
     }, []);
 
@@ -212,7 +214,7 @@ function Designs() {
                                                     <span className="category">Type</span>
                                             </div>
                                             <div className="design-request-card-item">
-                                                    {request.fileName}
+                                                    <p>{Moment(request.dateCreated).format("d MMM, Y")}</p>
                                                     <div className="category-line">
                                                         <div className="line"></div>
                                                     </div>

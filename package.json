@@ -53,6 +53,7 @@
     "grunt-rename-util": "~1.0.0",
     "grunt-sass": "^3.1.0",
     "grunt-strip-code": "~1.0.9",
+    "moment": "^2.29.4",
     "node-sass": "^7.0.3",
     "react-icons": "^4.8.0",
     "react-intersection-observer": "^9.4.3",
