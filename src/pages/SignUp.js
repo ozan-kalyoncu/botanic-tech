@@ -5,19 +5,23 @@ import { useState, useEffect } from 'react';
 
 function SignUp(params) {
 
+    const [receiveEmail, setReceiveEmail] = useState(false);
+
     const setEventListeners = () => { 
 
         let inputs = document.querySelectorAll('.sign-up.login-container input:not(input[name="submit"])');
         
         inputs.forEach((input) => {
             input.addEventListener( "input" ,(e) => {
-
-                if (e.target.value == null || /^\s*$/.test(e.target.value) ) {
-                    input.setAttribute('value', '');
+                if (e.target.name != "receiveEmailNotifications") {
+                    if (e.target.value == null || /^\s*$/.test(e.target.value) ) {
+                        input.setAttribute('value', '');
+                    } else {
+                        input.setAttribute('value', e.target.value);
+                    }
                 } else {
-                    input.setAttribute('value', e.target.value);
+                    setReceiveEmail(e.target.checked);
                 }
-                
             })
         });
     }
@@ -35,6 +39,8 @@ function SignUp(params) {
         inputs.forEach((input) => {
             body[input.name] = input.value;
         })
+
+        body["receiveEmailNotifications"] = receiveEmail;
 
         body = JSON.stringify(body);
 

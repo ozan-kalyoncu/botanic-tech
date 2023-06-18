@@ -63,6 +63,10 @@ function Forms({mode, userRegister, userLogin}) {
                         </div>
                         <input type="text" name="email" id="email-input" placeholder="Email Address" />
                         <input type="password" name="password" id="password-input" placeholder="Password" />
+                        <div className='email-notifications'>
+                            <input type="checkbox" name="receiveEmailNotifications" value="false" />
+                            <span>Receive Email Notifications</span>
+                        </div>
                         <div className='submit-button'>
                             <input onClick={userRegister ? userRegister : null} type='submit' name='submit' value="Register" />
                         </div>
