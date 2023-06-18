@@ -55,9 +55,6 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                 <li className="menu-item">
                     <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
                 </li>
-                <li className="menu-item">
-                    <Link className="menu-item-link" to="/pages/contact">Contact</Link>
-                </li>
             </ul>
         );
     }
