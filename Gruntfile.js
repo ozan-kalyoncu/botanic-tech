@@ -72,7 +72,9 @@ module.exports = function (grunt) {
          './src/assets/css/see-request-details.css': './src/assets/sass/pages/see-request-details.scss',
          './src/assets/css/collection-banner.css': './src/assets/sass/pages/collection-banner.scss',
          './src/assets/css/collection-grid.css': './src/assets/sass/pages/collection-grid.scss',
-         './src/assets/css/product-card.css': './src/assets/sass/shared/product-card.scss'
+         './src/assets/css/product-card.css': './src/assets/sass/shared/product-card.scss',
+         './src/assets/css/home.css': './src/assets/sass/pages/home.scss',
+         './src/assets/css/about.css': './src/assets/sass/pages/about-us.scss'
         }
       },
       dev: {

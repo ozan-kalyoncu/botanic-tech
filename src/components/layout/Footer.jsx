@@ -15,6 +15,12 @@ function Footer({userCheck, openMakeRequestSideBar}) {
 
     return (
         <>
+        <div className="ko-main-footer">
+            <div className="footer-content">
+                <p>Botanic Tech @2023,  All rights are reserved. </p>
+                <span>Designed By KAL Tech</span>
+            </div>
+        </div>
         <FullMenu mode="mobile" userCheck={userCheck} openMakeRequestSidebar={openMakeRequestSideBar}/>
         <div className="click-capture" onClick={(e) => clickCaptureEvent(e)}></div>
         </>

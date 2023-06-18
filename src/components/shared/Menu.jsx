@@ -53,13 +53,10 @@ function FullMenu({mode, userCheck, openMakeRequestSidebar}) {
                     <Link className="menu-item-link" to="/pages/about">About Us</Link>
                 </li>
                 <li className="menu-item">
-                    <Link className="menu-item-link" to="/collection/plants">Plants</Link>
-                </li>
-                <li className="menu-item">
-                    <Link className="menu-item-link" to="/collection/decorationitems">Decoration</Link>
-                </li>
-                <li className="menu-item">
                     <Link className="menu-item-link" to="/subscriptions">Subscription Plans</Link>
+                </li>
+                <li className="menu-item">
+                    <Link className="menu-item-link" to="/pages/contact">Contact</Link>
                 </li>
             </ul>
         );

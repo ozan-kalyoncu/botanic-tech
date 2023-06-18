@@ -86,14 +86,14 @@ function ProductDetail({productType, productId}) {
                                     <div className="tab-title">
                                         <p className="form-title">Description</p>
                                     </div>
-                                    <p>{product.description}</p>
+                                    <p className="description">{product.description}</p>
                                 </div>
                             )}
                             <div className="sidebar--body-tab">
                                 <div className="tab-title">
                                     <p className="form-title">Product Type:</p>
-                                    <p>{product.typeName}</p>
                                 </div>
+                                <p className="description">{product.typeName}</p>
                             </div>
                             {product.regions && (
                                 <div className="sidebar--body-tab">

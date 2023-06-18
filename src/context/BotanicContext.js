@@ -109,7 +109,9 @@ export const BotanicProvider = ({children, user, isExpired, hasSubscription}) =>
                loadPlants: loadPlants,
                decorationItems: items,
                loadItems: loadItems,
-               types: productTypes
+               types: productTypes,
+               plantCollectionDesc: "Thanks to our data on many different plants, you will be able to learn which plant in 7 regions of Turkey would be more efficient and suitable for you to grow. You will be able to cope with your works such as growing plants and landscaping much more easily than before.",
+               itemCollectionDesc: "In the Decoration section, we present some of the most preferred models of items such as garden lighting, fences, garden seating groups and benches in order to give an idea to our customers."
             }}
         >
             {children}
