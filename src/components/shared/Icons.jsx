@@ -5,7 +5,7 @@ import { FiChevronLeft } from "react-icons/fi";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsFillClipboard2CheckFill } from "react-icons/bs";
 import { BsPencilSquare, BsSearch } from "react-icons/bs";
-
+import {TbRoadOff} from "react-icons/tb";
 
 function Icons({icon, link}) {
 
@@ -55,6 +55,12 @@ function Icons({icon, link}) {
                 <BsSearch />
             </div>
         );
+    } else if (icon == "empty-designs") {
+        return (
+            <div className="icon">
+                <TbRoadOff />
+            </div>
+        )
     }
     
 }

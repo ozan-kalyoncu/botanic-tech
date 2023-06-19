@@ -10,7 +10,7 @@ import "../assets/css/product-card.css";
 
 function DecorationItemCollection(props) {
 
-    const {decorationItems, baseUrl, types, loadItems} = useContext(BotanicContext);
+    const {decorationItems, baseUrl, types, loadItems, itemCollectionDesc} = useContext(BotanicContext);
     const [itemTypes, setitemTypes] = useState([]);
 
 
@@ -41,14 +41,14 @@ function DecorationItemCollection(props) {
 
     return (
         <>
-        <CollectionBanner bannerSrc={bannerSrc} />
+        <CollectionBanner bannerSrc={bannerSrc} description={itemCollectionDesc} />
         <div className="collection-container">
             <div className="row expanded">
                 <div className="columns small-12">
                     <div className="collection-wrapper">
                     <div className="status-filter collection-filter">
                             <div className="filter--title">
-                                Filter:
+                                Filter
                             </div>
                             <div className='typePicker collection-filter-picker'>
                                 <p>

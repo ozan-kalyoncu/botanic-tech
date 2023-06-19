@@ -75,8 +75,14 @@ function Designs() {
             data.data.forEach(element => {
                 tempArr.push(element);
             });
-            setRequests(tempArr);
+            if (tempArr) {
+                setRequests(tempArr);   
+            } else {
+                setRequests(null);
+            }
             setInitialId(data.data[0].id);
+        } else {
+            setRequests(null);
         }
     }
 
@@ -186,52 +192,65 @@ function Designs() {
                         })}
                     </select>
                 </div>
-                <div className="designs-table">
-                    {requests.map((request, index) => {
-                            return(
-                                <div className="columns">
-                                    <div className="design-item--card" key={index}>
-                                        <div className="design-item--card-wrapper">
-                                            <div className="design-request-card-item">
-                                                <span className="category">Message</span>
-                                                <div className="category-line">
-                                                    <div className="line"></div>
-                                                </div>
-                                                <p>{request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}</p>
-                                            </div>
-                                            <div className="design-request-card-item">
-                                                    <span className="category">Status</span>
+                {requests.length != 0  ? (
+                    <>             
+                    <div className="designs-table">
+                        {requests.map((request, index) => {
+                                return(
+                                    <div className="columns">
+                                        <div className="design-item--card" key={index}>
+                                            <div className="design-item--card-wrapper">
+                                                <div className="design-request-card-item">
+                                                    <span className="category">Message</span>
                                                     <div className="category-line">
-                                                        <div className={"line " + (request.designStatusId == 1 ? "cancelled" : request.designStatusId == 2 ? "pending" : "replied") }></div>
+                                                        <div className="line"></div>
                                                     </div>
-                                                    <p>{request.designStatusName}</p>
-                                            </div>
-                                            <div className="design-request-card-item">
-                                                <span className="category">Type</span>
-                                                <div className="category-line">
-                                                    <div className="line"></div>
+                                                    <p>{request.requestMessage.substring(0, 30) + (request.requestMessage.length <= 30 ? '' : '...')}</p>
                                                 </div>
-                                                <p>{request.designTypeName}</p>
-                                            </div>
-                                            <div className="design-request-card-item">
-                                                <span className="category">Date</span>
-                                                <div className="category-line">
-                                                    <div className="line"></div>
+                                                <div className="design-request-card-item">
+                                                        <span className="category">Status</span>
+                                                        <div className="category-line">
+                                                            <div className={"line " + (request.designStatusId == 1 ? "cancelled" : request.designStatusId == 2 ? "pending" : "replied") }></div>
+                                                        </div>
+                                                        <p>{request.designStatusName}</p>
                                                 </div>
-                                                <p>{Moment(request.dateCreated).format("d MMM, Y")}</p>
+                                                <div className="design-request-card-item">
+                                                    <span className="category">Type</span>
+                                                    <div className="category-line">
+                                                        <div className="line"></div>
+                                                    </div>
+                                                    <p>{request.designTypeName}</p>
+                                                </div>
+                                                <div className="design-request-card-item">
+                                                    <span className="category">Date</span>
+                                                    <div className="category-line">
+                                                        <div className="line"></div>
+                                                    </div>
+                                                    <p>{Moment(request.dateCreated).format("d MMM, Y")}</p>
+                                                </div>
                                             </div>
+                                            {tableUserButton(request.id, request.designStatusId)}
                                         </div>
-                                        {tableUserButton(request.id, request.designStatusId)}
                                     </div>
-                                </div>
-                            );
-                    })}
-                </div>
-                <div className="paginate-links">
-                    <ul className="paginate-list">
+                                );
+                        })}
+                    </div>
+                    <div className="paginate-links">
+                        <ul className="paginate-list">
 
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                    </>
+                ) : (
+                    <div className="designs-table empty-table">
+                        <div className="empty-request-grid">
+                            <div>
+                                <Icons icon="empty-designs" />
+                            </div>
+                            <p>No request has been found</p>
+                        </div>
+                    </div>
+                )}
             </div>
             {renderDetailsSideBar()}
             {renderResponseSideBar()}

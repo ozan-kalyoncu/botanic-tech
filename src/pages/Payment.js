@@ -17,6 +17,8 @@ function Payment(params) {
 
     const { getItem } = useLocalStorage();
 
+    const [paymentFailed, setPaymenFailed] = useState("");
+
     const [penaltyDate, setpenaltyDate] = useState({
         'year': currentDate.getFullYear(),
         'month': currentDate.getMonth()
@@ -91,11 +93,10 @@ function Payment(params) {
 
         console.log(data);
         if (data.isSuccess) {
-            alert(data.Message);
             window.location = '/pages/designs';
         } else {
-            sideBarPayment.classList.add('payment-failed');
-            alert(data.Message);
+            sideBarPayment.classList.add('failed');
+            setPaymenFailed(data);
         }
     }
 
@@ -188,6 +189,18 @@ function Payment(params) {
                                 </div>
                             </div>
                         </div>             
+                    </div>
+                    <div className={'error' + (paymentFailed ? " error-active" : "")}>
+                        <p className='error-message'>{"*" + paymentFailed.Message}</p>
+                        <div className='error-details'>
+                            {paymentFailed && Object.keys(paymentFailed.Errors).map(key => {
+                                return (
+                                    <span>
+                                        {paymentFailed.Errors[key].ErrorMessage}
+                                    </span>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
                 <div className="sidebar-footer">

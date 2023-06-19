@@ -11,7 +11,7 @@ import "../assets/css/product-card.css";
 
 function PlantCollection(props) {
 
-    const {plants, baseUrl, types, setPlants, loadPlants} = useContext(BotanicContext);
+    const {plants, baseUrl, types, setPlants, loadPlants, plantCollectionDesc} = useContext(BotanicContext);
     const [regions, setregions] = useState([]); 
     const [plantTypes, setplantTypes] = useState([]);   
     const [plantFilters, setplantFilters] = useState([
@@ -80,14 +80,14 @@ function PlantCollection(props) {
 
     return (
         <>
-        <CollectionBanner bannerSrc={bannerSrc} />
+        <CollectionBanner bannerSrc={bannerSrc} description={plantCollectionDesc} />
         <div className="collection-container">
             <div className="row expanded">
                 <div className="columns small-12">
                     <div className="collection-wrapper">
                         <div className="status-filter collection-filter">
                             <div className="filter--title">
-                                Filter:
+                                Filter
                             </div>
                             <div className='regionPicker collection-filter-picker'>
                                 <p>

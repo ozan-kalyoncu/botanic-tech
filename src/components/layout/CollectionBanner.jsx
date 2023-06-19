@@ -2,7 +2,7 @@
 
 import React from "react";
 
-function CollectionBanner({bannerSrc}) {
+function CollectionBanner({bannerSrc, description}) {
     return (
         <div className='ko-collection-banner'>
             <div className="collection-banner">
@@ -13,7 +13,7 @@ function CollectionBanner({bannerSrc}) {
                 <div className="collection-banner--content small-12 columns" >
                     <h2 className="collection-banner--title">All Products and Reference Plants</h2>
                         <div className="collection-banner--description">
-                            <p>Sample description to be filled with actual one</p>
+                            <p>{description}</p>
                         </div>
                 </div>
             </div>

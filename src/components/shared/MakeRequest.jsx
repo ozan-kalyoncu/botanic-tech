@@ -19,6 +19,8 @@ function MakeRequest(params) {
     
     const [requestFile, setrequestFile] = useState("");
 
+    const [requestFailed, setRequestFailed] = useState("");
+
     const closeSideBarRequest = (e) => {
         e.preventDefault();
         document.querySelector(".request.sidebar-container").classList.remove("active");
@@ -73,11 +75,24 @@ function MakeRequest(params) {
 
         // Define what happens on successful data submission
         XHR.addEventListener("load", (event) => {
-            alert(event.target.responseText.Message);
-            console.log(requestSideBar);
-            requestSideBar.classList.remove('active');
-            document.querySelector(".click-capture").classList.remove("click-capture-event");
+            if (XHR.readyState == XMLHttpRequest.DONE) {
+                if (JSON.parse(XHR.response).IsSuccess) {
+                    requestSideBar.classList.remove('active');
+                    document.querySelector(".click-capture").classList.remove("click-capture-event");
+                } else if (JSON.parse(XHR.response).IsSuccess != true && JSON.parse(XHR.response).IsSuccess ) {
+                    setRequestFailed(JSON.parse(XHR.response));
+                    document.querySelector(".request.sidebar-container").classList.add("request-failed");
+                } else {
+                    setRequestFailed({IsSuccess: false, Message: JSON.parse(XHR.response).errors, title: JSON.parse(XHR.response).title})
+                }
+            }
         });
+
+        XHR.onreadystatechange = () => {
+            if (XHR.readyState === 4) {
+              console.log(XHR.response);
+            }
+        };
     
         // Define what happens in case of error
         XHR.addEventListener("error", (event) => {
@@ -114,6 +129,10 @@ function MakeRequest(params) {
         document.querySelector("select#design-types-select").setAttribute("value", "1");
         setEventListeners();
     }, []);
+
+    useEffect(() => {
+        console.log(requestFailed);
+    }, [requestFailed]);
 
     return (
         <div className="request sidebar-container">
@@ -153,6 +172,23 @@ function MakeRequest(params) {
                                 <textarea name="requestMessage" onChange={(e) => setRequestMessage(e)} rows="10" cols="40" id="designMessage" placeholder="Your Design Request Message"></textarea>
                                 <input type="hidden" name="requestMessage" id="request-message" />
                             </div>
+                        </div>
+                        <div className={'error' + (requestFailed ? " error-active" : "")}>
+                            {typeof requestFailed.Message != Array ? (
+                                <p className='error-message'>{"*" + requestFailed.Message}</p>
+                            ): (
+                                <>
+                                <p className="error-message">{"*" + requestFailed.title}</p>
+                                <div className="error-details">
+                                    {requestFailed && Object.keys(requestFailed.Message).map(key => {
+                                        return (
+                                            <span>{requestFailed.Message[key][0]}</span>
+                                        )   
+                                    })}
+                                </div>
+                                </>
+                            )}
+                            
                         </div>
                         <div className="sidebar-footer">
                             <button className="button" onClick={(e) => closeSideBarRequest(e)}>
